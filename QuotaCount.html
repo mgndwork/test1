@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+<Title>Project Quota</Title>
+<style>
+
+#customers,#unprostab {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: auto;
+}
+
+#customers td,#unprostab td,#customers th,#unprostab th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even),#unprostab tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover,#unprostab tr:hover {background-color: #ddd;}
+
+#customers th,#unprostab th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 15px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: red;
+}
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 40%;
+  top: 30%;
+  width: 25%; /* Full width */
+  height: 68%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(133,173,173); /* Fallback color */
+  background-color: rgba(133,173,173,2); /* Black w/ opacity */
+}
+
+/* The Modal (background) */
+.modal_2 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 1%;
+  top: 20%;
+  width: 95%; /* Full width */
+  height: 70%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(133,173,173); /* Fallback color */
+  background-color: rgba(133,173,173,2); /* Black w/ opacity */
+}
+
+
+.button {
+  background-color: #FFFFFF; /* Green */
+  border: 1;
+  border-color: ##e7e7e7;
+  color: black;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition-duration: 0.4s;
+}
+.button:hover {
+  background-color: #FCBFB2;
+  color: black;
+}
+
+/* The Close Button */
+.close {
+  color: #ff0000;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.table-container {
+    overflow-y: auto;
+    height: 400px; /* Adjust this value based on your requirement */
+}
+
+th {
+    position: sticky;
+    top: 0;
+    background-color: #fff; /* Prevents header from becoming transparent */
+    z-index: 100; /* Ensures the header stays on top of other content */
+}
+
+
+
+
+
+</style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</Head>
+
+
+<body>
+<div id='area1' style='position:relative;top:5px'><center><h1><u>Live Project Quota Sample</u></h1></center></div>
+
+<table cellpadding=10>
+<tr><td><button type="button" onclick="myFunction1()" class="button" name="btnlogin">Click here login to nField</button></td></tr>
+</table>
+
+
+<div id='area2' style='position:relative;top:10px'></div>
+<div id='area3' style='position:relative;top:10px' class='table-container'></div>
+<div id='area4' style='position:relative;top:10px' class='table-container'></div>
+
+
+<script>
+var m_Token;
+var LKarray = [];
+var LK_filter;
+var t;
+var x;
+var y;
+var i = 0;
+var vobj;
+var txtList;
+
+function myFunction1(){
+	document.getElementById("area2").innerHTML="";
+	//document.getElementById("area1").innerHTML = "";
+	txtList="";
+	LKarray=[];
+	
+	var xmlHttp1 = new XMLHttpRequest();
+    xmlHttp1.open("POST","https://prod-111.westeurope.logic.azure.com:443/workflows/9bbf31b3aa7d4a3d8e1ca03be7fc96f3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Km-25t2uwKFLHPyWTdsbOY0DeqwdLKUr9nhVdHvk_mI", false ); 
+    xmlHttp1.setRequestHeader("Content-Type","application/json");  
+    var obj = {"keyid":"abcd4321abcd","myemail":"nadun.gamage@kantar.com"};
+    xmlHttp1.send(JSON.stringify(obj));
+    
+    if (xmlHttp1.status==200) {
+		var aa = xmlHttp1.responseText;
+		//m_Token = aa.substring(24, 120);
+		const obj = JSON.parse(aa);
+		m_Token = obj.output;
+		alert ("Logged in Successfully");
+    } else {
+		alert ("Login Failed. Please contact scripting team");
+     }
+
+
+
+		//adding project list to dropdown box
+	
+	
+	
+	var xmlHttpa = new XMLHttpRequest();
+    xmlHttpa.open("GET","https://apiap.nfieldmr.com/v1/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started'", false); 
+    xmlHttpa.setRequestHeader("Content-Type","application/json");
+	xmlHttpa.setRequestHeader("Authorization", "Basic " + m_Token);	
+	xmlHttpa.send();
+	  
+
+    if (xmlHttpa.status==200) {
+	
+    var aa = xmlHttpa.responseText;
+    //m_Token = aa.substring(24, 120);
+	LK_filter = JSON.parse(aa);
+	
+	for (x in LK_filter) {
+			
+			   if(LK_filter[x].ClientName == "LK" && LK_filter[x].SurveyState == 1) {
+				 vobj = {no:"" , SName:"" , SID:"" , Success:"", Reject:""};
+				 vobj.no = i;
+				 vobj.SName = LK_filter[x].SurveyName;
+				 vobj.SID = LK_filter[x].SurveyId;
+				 vobj.SurveyState = LK_filter[x].SurveyState
+				 LKarray[i] = vobj;
+				 i +=1;
+			   }
+			
+	}
+		
+		function compare(a, b) {
+		// Use toUpperCase() to ignore character casing
+		const bandA = a.SName.toUpperCase();
+		const bandB = b.SName.toUpperCase();
+
+		let comparison = 0;
+		if (bandA > bandB) {
+			comparison = 1;
+		  } else if (bandA < bandB) {
+		comparison = -1;
+		  }
+		return comparison;
+		}
+
+        LKarray.sort(compare);
+		LKarray.sort(function(a){return a.SName});
+		
+		txtList="<table cellpadding='10'><tr><td><font size='4'>Survey Name</font><font color='red'>*</font></td><td><select id='surveylist'><option value='none'>(None)</option>";
+		for(y in LKarray) {
+			txtList +="<option value='"+LKarray[y].no+"'>"+LKarray[y].SName+"</option>";
+		}
+		txtList +="</select></td><td><button type='button' onclick='myFunctionQuota()' class='button' name='btnquota'>Get Live Quota</button></td><td><button type='button' onclick='copytable()' class='button' name='copyclipbord'>Copy table to clipbord</button></td></tr></table>";
+		document.getElementById("area2").innerHTML =txtList;
+	
+	
+    } else {
+		 alert ("Signin first and Check your Internet connectivity. Otherwise, Please contact scripting team");
+		 document.getElementById("area2").innerHTML = "";
+		 document.getElementById("area3").innerHTML = "";
+		 document.getElementById("area4").innerHTML = "";
+		 system.stop();
+     }	 
+
+
+}
+
+function copytable(){
+        var el = document.getElementById('qt1');
+        
+        var body = document.body, range, sel;
+    if (document.createRange && window.getSelection) {
+        range = document.createRange();
+        sel = window.getSelection();
+        sel.removeAllRanges();
+        try {
+            range.selectNodeContents(el);
+            sel.addRange(range);
+        } catch (e) {
+            range.selectNode(el);
+            sel.addRange(range);
+        }
+    } else if (body.createTextRange) {
+        range = body.createTextRange();
+        range.moveToElementText(el);
+        range.select();
+    }
+    document.execCommand("Copy");
+}
+
+function myFunctionQuota(){
+var sid;
+var area3HTML="";
+var area4HTML="";
+var y;
+var x;
+var z;
+var k;
+var l;
+var m;
+var mapquotaCount;
+var diffmapquotaCount;
+var tabList;
+var indexCheckArray;
+
+
+document.getElementById("area3").innerHTML = "";
+document.getElementById("area4").innerHTML = "";
+
+
+if(document.getElementById("surveylist").value == "none"){
+			alert("Please Select a project to proceed.");
+	} else {
+	
+			prjobj = LKarray.filter(prj => prj.no == document.getElementById("surveylist").value);
+			sid=prjobj[0].SID;
+			
+			//Get project Target
+			var xmlHttpm = new XMLHttpRequest();
+			xmlHttpm.open("GET","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/Counts", false); 
+			xmlHttpm.setRequestHeader("Content-Type","application/json");
+			xmlHttpm.setRequestHeader("Authorization", "Basic " + m_Token);	
+			xmlHttpm.send();
+
+			if (xmlHttpm.status==200) {
+				var quotaObj = JSON.parse(xmlHttpm.responseText);
+				//add quality control count
+				var xmlHttpq = new XMLHttpRequest();
+				xmlHttpq.open("GET","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/InterviewQuality", false); 
+				xmlHttpq.setRequestHeader("Content-Type","application/json");
+				xmlHttpq.setRequestHeader("Authorization", "Basic " + m_Token);	
+				xmlHttpq.send();
+				if (xmlHttpq.status==200) {
+					var qcObj = JSON.parse(xmlHttpq.responseText);
+					qcApp = qcObj.filter(tab => tab.InterviewQuality == 1);
+					qcUv = qcObj.filter(tab => tab.InterviewQuality == 2);
+					qcRej = qcObj.filter(tab => tab.InterviewQuality == 3);
+					qcNc = qcObj.filter(tab => tab.InterviewQuality == 0);
+					
+					qcNCTAB=qcNc.map(mytab => mytab.InterviewerId);
+					uniqueTabArray = qcNCTAB.filter((value, index, self) => self.indexOf(value) === index);
+					
+				}
+				
+				
+				area3HTML="<center><table border='1' cellspacing='0' cellpadding='5' id='QCtable'><tr><th>Missing Quota</th><th>Completed</th><th>QC Checked</th><th>Approved</th><th>Unverified</th><th>Rejected</th><th><a href='#area4'>Unprocessed</a></th></tr><tr><td id='missqt'></td><td>"+(qcApp.length+qcUv.length+qcRej.length+qcNc.length)+"</td><td>"+(qcApp.length+qcUv.length+qcRej.length)+"</td><td>"+qcApp.length+"</td><td>"+qcUv.length+"</td><td>"+qcRej.length+"</td><td>"+qcNc.length+"</td></tr></table><br/><br/>";
+				
+				
+				/////////////////////////////
+				mapquotaCount=0;
+				diffmapquotaCount=0;
+				
+				//add JSON data to table
+				area3HTML+="<table border='1' cellspacing='0' cellpadding='5' id='qt1'><tr><th>Name</th><th>Target</th><th>Successful</th><th>ScreenedOut</th><th>DroppedOut</th><th>Rejected</th><th>Outstanding</th></tr>";
+				area3HTML+="<tr><td>Total</td><td>"+quotaObj.QuotaCounts.Target+"</td><td>"+quotaObj.QuotaCounts.SuccessfulCount+"</td><td>"+quotaObj.QuotaCounts.UnsuccessfulCount+"</td><td>"+quotaObj.QuotaCounts.DroppedOutCount+"</td><td>"+quotaObj.QuotaCounts.RejectedCount+"</td><td>"+(new Intl.NumberFormat("en-US", {signDisplay: "exceptZero"}).format(quotaObj.QuotaCounts.SuccessfulCount-quotaObj.QuotaCounts.Target))+"</td></tr>";
+				var attblevel1=quotaObj.QuotaCounts.Attributes;
+				if(attblevel1.length>0){
+					for(y in attblevel1) {
+						var level1cell=attblevel1[y].Levels;
+						if(level1cell.length>0){
+							for(x in level1cell) {
+								area3HTML+="<tr><td><strong>"+level1cell[x].Name+"</strong></td><td>"+level1cell[x].Target+"</td><td>"+level1cell[x].SuccessfulCount+"</td><td>"+level1cell[x].UnsuccessfulCount+"</td><td>"+level1cell[x].DroppedOutCount+"</td><td>"+level1cell[x].RejectedCount+"</td><td>"+(new Intl.NumberFormat("en-US", {signDisplay: "exceptZero"}).format(level1cell[x].SuccessfulCount-level1cell[x].Target))+"</td></tr>";
+								mapquotaCount=(mapquotaCount+level1cell[x].SuccessfulCount);
+								var attblevel2=level1cell[x].Attributes;
+								if(attblevel2.length>0){
+									for(z in attblevel2) {
+										var level2cell=attblevel2[z].Levels;
+										if(level2cell.length>0){
+											for(k in level2cell) {
+												area3HTML+="<tr><td style='color: blue;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+level2cell[k].Name+"</td><td>"+level2cell[k].Target+"</td><td>"+level2cell[k].SuccessfulCount+"</td><td>"+level2cell[k].UnsuccessfulCount+"</td><td>"+level2cell[k].DroppedOutCount+"</td><td>"+level2cell[k].RejectedCount+"</td><td>"+(new Intl.NumberFormat("en-US", {signDisplay: "exceptZero"}).format(level2cell[k].SuccessfulCount-level2cell[k].Target))+"</td></tr>";
+												var attblevel3=level2cell[k].Attributes;
+												if(attblevel3.length>0){
+													for(l in attblevel3) {
+														var level3cell=attblevel3[l].Levels;
+														if(level3cell.length>0){
+															for(m in level3cell) {
+																area3HTML+="<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+level3cell[m].Name+"</td><td>"+level3cell[m].Target+"</td><td>"+level3cell[m].SuccessfulCount+"</td><td>"+level3cell[m].UnsuccessfulCount+"</td><td>"+level3cell[m].DroppedOutCount+"</td><td>"+level3cell[m].RejectedCount+"</td><td>"+(new Intl.NumberFormat("en-US", {signDisplay: "exceptZero"}).format(level3cell[m].SuccessfulCount-level3cell[m].Target))+"</td></tr>";
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+							diffmapquotaCount=(quotaObj.QuotaCounts.SuccessfulCount-mapquotaCount);
+						}
+					}
+					
+					
+				}
+				
+				area3HTML+="</table></center><br/>";
+				
+				//add unprocess data details table
+				
+				//get all tablist from sharepoint and get tab center and Owner
+				var xmlHttpb = new XMLHttpRequest();
+				xmlHttpb.open("POST","https://prod-204.westeurope.logic.azure.com:443/workflows/5335c6e225cc4d9eaab64921fc85d3fc/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4In9cJjHbbnvjG6Q17C0ekJCv-ye7K-LA_PuKD0NoGc", false ); 
+				xmlHttpb.setRequestHeader("Content-Type","application/json");  
+				var objb = {"nkey":"TESTKEYXXXXXXXXX","Center":"ne 'NA'","type":"tablist"};
+				xmlHttpb.send(JSON.stringify(objb));
+		
+				if (xmlHttpb.status==200) {
+					var cc = xmlHttpb.responseText;
+					//m_Token = aa.substring(24, 120);
+					tabList = JSON.parse(cc);
+					indexCheckArray=tabList.map(mytab => mytab.InterviewerClientId);
+				}
+				
+				
+				
+				area4HTML="<br/><center><table border='1' cellspacing='0' cellpadding='5' id='uptable'><tr><th>Device ID</th><th>Unprocessed Count</th><th>Center</th><th>Tablet Owner</th></tr>";
+				
+				if(uniqueTabArray.length>0){
+					for (let i = 0; i < uniqueTabArray.length; i++) {
+						let ele = uniqueTabArray[i];
+						let myindex = indexCheckArray.indexOf(ele);
+						area4HTML+="<tr><td>"+ele+"</td><td>"+count(qcNCTAB,ele)+"</td><td>"+tabList[myindex].Center+"</td><td>"+tabList[myindex].Owner+"</td></tr>";
+					}
+				}
+				
+				area4HTML+="</table><br/>";
+				area4HTML+="<br/><b>Note: NFIELD data only upload to KOOL system at mid night in everyday. it will unprocessed status until upload to the KOOL system.Unprocessed interviews may not pass to KOOL system in long time becouse of many reasons. Please make sure......</b></center><br>";
+				area4HTML+="<p>&#8594; Tablet has fully syncronized. you can check it by clicking tablet status in tablet assignment page. </p>";
+				area4HTML+="<p>&#8594; Interviwer fully assigned to KOOL system and genarate an assignment letter before assign tablet to the project. unless, Please genarate assignment letter and inform by email to JMS team to rerun project ASAP. </p>";
+				area4HTML+="<p>&#8594; If All cases are unprocess state, Scripting team may not setup project yet so that auto syncronizing NFIELD data to KOOL system or script error. Please inform to Scripter of the project. </p>";
+				area4HTML+="<br/>";
+				//////////////////////////////////
+				
+				  
+				
+			}
+			//conditional format to table
+			document.getElementById("area3").innerHTML =area3HTML;
+			document.getElementById("area4").innerHTML =area4HTML;
+			document.getElementById("missqt").innerHTML =diffmapquotaCount;
+			
+				const gettable=document.getElementById("area3").querySelector("[id='qt1']");
+				const rows = gettable.getElementsByTagName('tr');
+
+				  for (let i=0; i<rows.length; i++)
+				  {
+					 let lastValue=rows[i].cells[rows[i].cells.length-1].innerHTML
+					if(parseInt(lastValue)>0){
+						rows[i].cells[rows[i].cells.length-1].style.backgroundColor="#b3ffb3";
+						rows[i].cells[rows[i].cells.length-1].innerHTML="&#x2191;&nbsp;&nbsp;"+lastValue;
+					} else {
+						if(parseInt(lastValue)<0){
+							rows[i].cells[rows[i].cells.length-1].style.backgroundColor="#ff6666";
+							rows[i].cells[rows[i].cells.length-1].innerHTML="&#x2193;&nbsp;&nbsp;"+lastValue;
+						}
+						
+					}
+					if(parseInt(rows[i].cells[1].innerHTML)==0){
+						rows[i].style.backgroundColor="#808080";
+					}
+				  }
+	
+	}
+
+
+
+}
+
+
+function count(arr, element) {
+    return arr.filter(
+        (ele) => ele == element).length;
+}
+
+</script>
+
+
+</body>
+
+
+</html>
