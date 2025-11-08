@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Assign Tablet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+#customers,#unprostab {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: auto;
+}
+
+#customers td,#unprostab td,#customers th,#unprostab th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even),#unprostab tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover,#unprostab tr:hover {background-color: #ddd;}
+
+#customers th,#unprostab th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 15px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: red;
+}
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 40%;
+  top: 30%;
+  width: 25%; /* Full width */
+  height: 68%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(133,173,173); /* Fallback color */
+  background-color: rgba(133,173,173,2); /* Black w/ opacity */
+}
+
+/* The Modal (background) */
+.modal_2 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 1%;
+  top: 20%;
+  width: 95%; /* Full width */
+  height: 70%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(133,173,173); /* Fallback color */
+  background-color: rgba(133,173,173,2); /* Black w/ opacity */
+}
+
+
+.button {
+  background-color: #FFFFFF; /* Green */
+  border: 1;
+  border-color: ##e7e7e7;
+  color: black;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition-duration: 0.4s;
+}
+.button:hover {
+  background-color: #FCBFB2;
+  color: black;
+}
+
+/* The Close Button */
+.close {
+  color: #ff0000;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+
+</style>
+
+
+
+</head>
+
+
+<body>
+<center><H1><u><b>Tablet Assignment and Clean for CAPI Quota projects</b></u></H1></center>
+<center><font style='color:red;font-size: 16px;'>(Response time will be changed according to your internet connection speed!)</font></center>
+<br/>
+<table cellpadding=10>
+<tr><td><button type="button" onclick="myFunction1()" class="button" name="btnFormAction02">Click here login to nField</button></td></tr>
+<tr><td><p style="font-size:20px">Select your center:*</p></td><td><select name="center" id="center" style="min-width:200px"><option value="none">(None)</option><option value="east">East</option><option value="galle">Galle</option><option value="hof">Head Office Field (HOF)</option><option value="kandy">Kandy</option><option value="kurunegala">Kurunegala</option><option value="north">North</option><option value="all">All [Scripters Only]</option></select></td><td><button type="button" onclick="myFunctionS()" class="button" name="btnFormAction101">Tablet Assignment/Status</button></td><td><button type="button" onclick="mySamplingPointS()" class="button" name="btnFormAction103">Tablet Assignment(Multi Visit Only)</button></<td><button type="button" onclick="myFunctionC()" class="button" name="btnFormAction102">Clean Tablet</button></td><td><button type="button" onclick="myRefresh()" class="button">Refresh Page</button></td></tr>
+</table>
+
+<div id='area1' style='position:relative;top:5px'></div>
+<div id='area2' style='position:relative;top:5px'></div>
+
+
+<script>
+var m_Token;
+var LKarray = [];
+var tabList;
+var ArrayIntv=[];
+var ArrayIntvId=[];
+var ArrayIntvUsername=[];
+var ArrayIntvIdx;
+var ArrayIntvUsernamex;
+var ArrayClean=[];
+var Intvname1;
+var sid;
+var sdes;
+
+
+function myRefresh(){
+	location.reload();
+}
+
+function myFunction1() {
+
+
+    var xmlHttp1 = new XMLHttpRequest();
+    xmlHttp1.open("POST","https://prod-111.westeurope.logic.azure.com:443/workflows/9bbf31b3aa7d4a3d8e1ca03be7fc96f3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Km-25t2uwKFLHPyWTdsbOY0DeqwdLKUr9nhVdHvk_mI", false ); 
+    xmlHttp1.setRequestHeader("Content-Type","application/json");  
+    var obj = {"keyid":"abcd4321abcd","myemail":"nadun.gamage@kantar.com"};
+    xmlHttp1.send(JSON.stringify(obj));
+    
+    if (xmlHttp1.status==200) {
+    var aa = xmlHttp1.responseText;
+    //m_Token = aa.substring(24, 120);
+	const obj = JSON.parse(aa);
+	m_Token = obj.output;
+    alert ("Logged in Successfully");
+    } else {
+     alert ("Login Failed. Please contact scripting team");
+     }	
+
+
+}
+
+function myFunctionS() {
+	var Centerfilter;
+	switch(document.getElementById("center").value) {
+	case "east":
+    // code block
+	Centerfilter="eq 'East'";
+    break;
+	case "galle":
+    // code block
+	Centerfilter="eq 'Galle'";
+    break;
+	case "hof":
+    // code block
+	Centerfilter="eq 'Head Office Field (HOF)'";
+    break;
+	case "kandy":
+    // code block
+	Centerfilter="eq 'Kandy'";
+    break;
+	case "kurunegala":
+    // code block
+	Centerfilter="eq 'Kurunegala'";
+    break;
+	case "north":
+    // code block
+	Centerfilter="eq 'North'";
+    break;
+	case "all":
+    // code block
+	Centerfilter="ne 'NA'";
+    break;
+	default:
+    // code block
+	alert("Please select correct center before proceed.");
+	//system.stop();
+	//location.reload();
+	return;
+	};
+	document.getElementById("area1").innerHTML = "";
+	document.getElementById("area2").innerHTML="";
+	document.getElementById("area1").innerHTML = "<center>Wait.....</center>";
+	
+	//adding project list to dropdown box
+	var LK_filter;
+	var t;
+	var x;
+	var y;
+	var i = 0;
+	var vobj;
+	var txtList;
+	
+	
+	var xmlHttpa = new XMLHttpRequest();
+    xmlHttpa.open("GET","https://apiap.nfieldmr.com/v1/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started'", false); 
+    xmlHttpa.setRequestHeader("Content-Type","application/json");
+	xmlHttpa.setRequestHeader("Authorization", "Basic " + m_Token);	
+	xmlHttpa.send();
+	  
+
+    if (xmlHttpa.status==200) {
+	
+    var aa = xmlHttpa.responseText;
+    //m_Token = aa.substring(24, 120);
+	LK_filter = JSON.parse(aa);
+	
+	for (x in LK_filter) {
+			
+			   if(LK_filter[x].ClientName == "LK" && LK_filter[x].SurveyState == 1) {
+				 vobj = {no:"" , SName:"" , SID:"" , Success:"", Reject:""};
+				 vobj.no = i;
+				 vobj.SName = LK_filter[x].SurveyName;
+				 vobj.SID = LK_filter[x].SurveyId;
+				 vobj.SurveyState = LK_filter[x].SurveyState
+				 LKarray[i] = vobj;
+				 i +=1;
+			   }
+			
+	}
+		
+		function compare(a, b) {
+		// Use toUpperCase() to ignore character casing
+		const bandA = a.SName.toUpperCase();
+		const bandB = b.SName.toUpperCase();
+
+		let comparison = 0;
+		if (bandA > bandB) {
+			comparison = 1;
+		  } else if (bandA < bandB) {
+		comparison = -1;
+		  }
+		return comparison;
+		}
+
+        LKarray.sort(compare);
+		LKarray.sort(function(a){return a.SName});
+		
+		txtList="<table cellpadding='10'><tr><td><font size='4'>Survey Name</font><font color='red'>*</font></td><td><select id='surveylist'><option value='none'>(None)</option>";
+		for(y in LKarray) {
+			txtList +="<option value='"+LKarray[y].no+"'>"+LKarray[y].SName+"</option>";
+		}
+		txtList +="</select></td></tr></table>";
+		//document.getElementById("area1").innerHTML =txtList;
+	
+	
+    } else {
+     alert ("Signin first and Check your Internet connectivity. Otherwise, Please contact scripting team");
+	 document.getElementById("area1").innerHTML = "";
+	 system.stop();
+     }	 
+	 
+	 
+	 //Adding center tablets to dropdown array
+	 
+	 txtList +="<table border='0' cellspacing='0' cellpadding='5'><tr><td width='190px' valign='top' rowspan='5'>Tablet Id (s)<font color='red'>*</font></td><td width='200px' valign='top'><select id='intv1'><option value='none'>(None)</option></select></td><td width='200px' valign='top'><select id='intv2'><option value='none'>(None)</option></select></td></tr>";
+	 txtList +="<tr><td width='200px' valign='top'><select id='intv3'><option value='none'>(None)</option></select></td><td width='200px' valign='top'><select id='intv4'><option value='none'>(None)</option></select></td></tr>";
+	 txtList +="<tr><td width='200px' valign='top'><select id='intv5'><option value='none'>(None)</option></select></td><td width='200px' valign='top'><select id='intv6'><option value='none'>(None)</option></select></td></tr>";
+	 txtList +="<tr><td width='200px' valign='top'><select id='intv7'><option value='none'>(None)</option></select></td><td width='200px' valign='top'><select id='intv8'><option value='none'>(None)</option></select></td></tr>";
+	 txtList +="<tr><td width='200px' valign='top'><select id='intv9'><option value='none'>(None)</option></select></td><td width='200px' valign='top'><select id='intv10'><option value='none'>(None)</option></select></td></tr>";
+	 txtList +="<tr><td><button id='tabassign' width='250px' onclick='myAssign()' style='color:green;font-size: 12px;' class='button'>Assign tablets</button></td><td><button id='tabstatus' width='250px' onclick='myStatus()' style='color:blue;font-size: 12px;' class='button'>Download current status</button></td><td><button id='tabUnassign' width='250px' onclick='myUnassign()' style='color:red;font-size: 12px;' class='button'>Unassign tablets</button></td></tr>";
+	 txtList +="</table>";
+	 document.getElementById("area1").innerHTML =txtList;
+	 
+	 //dynamicaly adding options for dropdown boxes
+	 
+		var xmlHttpb = new XMLHttpRequest();
+		xmlHttpb.open("POST","https://prod-204.westeurope.logic.azure.com:443/workflows/5335c6e225cc4d9eaab64921fc85d3fc/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4In9cJjHbbnvjG6Q17C0ekJCv-ye7K-LA_PuKD0NoGc", false ); 
+		xmlHttpb.setRequestHeader("Content-Type","application/json");  
+		var objb = {"nkey":"TESTKEYXXXXXXXXX","Center":Centerfilter,"type":"tablist"};
+		xmlHttpb.send(JSON.stringify(objb));
+		
+		if (xmlHttpb.status==200) {
+			var aa = xmlHttpb.responseText;
+			//m_Token = aa.substring(24, 120);
+			tabList = JSON.parse(aa);
+			//alert (tabList.length);
+				const select1 = document.querySelector('#intv1');
+				const select2 = document.querySelector('#intv2'); 
+				const select3 = document.querySelector('#intv3'); 
+				const select4 = document.querySelector('#intv4'); 
+				const select5 = document.querySelector('#intv5'); 
+				const select6 = document.querySelector('#intv6'); 
+				const select7 = document.querySelector('#intv7'); 
+				const select8 = document.querySelector('#intv8'); 
+				const select9 = document.querySelector('#intv9'); 
+				const select10 = document.querySelector('#intv10'); 
+				tabList.forEach(addseloption);
+				function addseloption(item, index, arr){
+					//alert(item.Lastfour);
+					let newOption1 = new Option(item.Lastfour,item.Lastfour);
+					let newOption2 = new Option(item.Lastfour,item.Lastfour);
+					let newOption3 = new Option(item.Lastfour,item.Lastfour);
+					let newOption4 = new Option(item.Lastfour,item.Lastfour);
+					let newOption5 = new Option(item.Lastfour,item.Lastfour);
+					let newOption6 = new Option(item.Lastfour,item.Lastfour);
+					let newOption7 = new Option(item.Lastfour,item.Lastfour);
+					let newOption8 = new Option(item.Lastfour,item.Lastfour);
+					let newOption9 = new Option(item.Lastfour,item.Lastfour);
+					let newOption10 = new Option(item.Lastfour,item.Lastfour);
+					select1.add(newOption1,undefined);
+					select2.add(newOption2,undefined);
+					select3.add(newOption3,undefined);
+					select4.add(newOption4,undefined);
+					select5.add(newOption5,undefined);
+					select6.add(newOption6,undefined);
+					select7.add(newOption7,undefined);
+					select8.add(newOption8,undefined);
+					select9.add(newOption9,undefined);
+					select10.add(newOption10,undefined);
+				};
+		} else {
+			alert ("Error,Sharepoint has not given tablet list at the moment. please try it later. if it is unsuccess again, please contact scripting team.");
+		 }	
+		 
+ 
+	}
+
+
+function myAssign() {
+
+//alert("This service will come soon. This is under construction. Please use old sharepoint service page for this task.");
+//get selected tablet live project count
+
+var i;
+var prjobj=[];
+var sid;
+var outlabel;
+var prjtarget;
+var assignHTML="";
+var isassign;
+
+document.getElementById("area2").innerHTML ="<p>Wait.....</p>";
+
+
+if((document.getElementById("intv1").value == "none" && document.getElementById("intv2").value == "none" && document.getElementById("intv3").value == "none" && document.getElementById("intv4").value == "none" && document.getElementById("intv5").value == "none" && document.getElementById("intv6").value == "none" && document.getElementById("intv7").value == "none" && document.getElementById("intv8").value == "none" && document.getElementById("intv9").value == "none" && document.getElementById("intv10").value == "none") || (document.getElementById("surveylist").value == "none")){
+		alert("Please Select a project and at lease one tablet to proceed.");
+	} else {
+		//get selected tablet
+		var Intvname1=document.getElementById("intv1").value
+		var Intvname2=document.getElementById("intv2").value
+		var Intvname3=document.getElementById("intv3").value
+		var Intvname4=document.getElementById("intv4").value
+		var Intvname5=document.getElementById("intv5").value
+		var Intvname6=document.getElementById("intv6").value
+		var Intvname7=document.getElementById("intv7").value
+		var Intvname8=document.getElementById("intv8").value
+		var Intvname9=document.getElementById("intv9").value
+		var Intvname10=document.getElementById("intv10").value
+				
+		ArrayIntv=[Intvname1,Intvname2,Intvname3,Intvname4,Intvname5,Intvname6,Intvname7,Intvname8,Intvname9,Intvname10];
+			for (i in ArrayIntv) {
+				if (ArrayIntv[i]=="(None)") {ArrayIntvId[i]="(None)";ArrayIntvUsername[i]="(None)";} else {
+					tabList.forEach(checkSelected);
+					function checkSelected(item, index, arr){
+						if(item.Lastfour==ArrayIntv[i]){
+							ArrayIntvId[i]=item.Longid;
+							ArrayIntvUsername[i]=item.Username;
+							return;
+						};
+					};
+					   
+				}
+			}
+				
+		//get survey Id
+				
+		prjobj = LKarray.filter(prj => prj.no == document.getElementById("surveylist").value);
+		sid=prjobj[0].SID;
+
+		//Get project Target
+		var xmlHttpm = new XMLHttpRequest();
+		xmlHttpm.open("GET","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/SurveyQuotaFrame", false); 
+		xmlHttpm.setRequestHeader("Content-Type","application/json");
+		xmlHttpm.setRequestHeader("Authorization", "Basic " + m_Token);	
+		xmlHttpm.send();
+
+		if (xmlHttpm.status==200) {
+						
+			var tarObj = JSON.parse(xmlHttpm.responseText);
+			prjtarget=tarObj.Target;
+			
+		}
+
+		assignHTML+="<table border='1' cellspacing='0' cellpadding='5'><tr><th>Tablet ID</th><th>Assignment Status</th></tr>";
+		for (i in ArrayIntvId) {
+			isassign=false;
+			outlabel="";
+			let m = GetLivePrjCount(ArrayIntvId[i]);
+			
+			//alert(m+"-id"+ArrayIntvId[i]);
+			if(m>12){
+				outlabel="Failed.This device has "+m+"Live projects. Maximum live assignments are 12. Please clean exsisting projects before assign new project";
+				assignHTML+="<tr><td>"+ArrayIntvUsername[i]+"</td><td style='color:red;'>"+outlabel+"</td></tr>";
+			} else {
+					
+					var xmlHttp7 = new XMLHttpRequest();
+					xmlHttp7.open("POST","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/Interviewers", false); 
+					xmlHttp7.setRequestHeader("Content-Type","application/json");
+					xmlHttp7.setRequestHeader("Authorization","Basic "+ m_Token);			
+					var obj7 = {"InterviewerId":ArrayIntvId[i]};
+					xmlHttp7.send(JSON.stringify(obj7));
+					
+					if (xmlHttp7.status==200) {
+						var xmlHttp8 = new XMLHttpRequest();
+						xmlHttp8.open("POST","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/Distribute", false); 
+						xmlHttp8.setRequestHeader("Content-Type","application/json");
+						xmlHttp8.setRequestHeader("Authorization","Basic "+ m_Token);			
+						var obj8 = {"Description":"","SurveyGrossTargetToDistribute":prjtarget,"InterviewerIds":[ArrayIntvId[i]]};
+						xmlHttp8.send(JSON.stringify(obj8));
+					}
+					
+					if (xmlHttp8.status==200) {
+						var Obj9 = JSON.parse(xmlHttp8.responseText);
+						isassign=Obj9[0].DidAssign;
+					}
+					if(isassign==true){
+						outlabel="Assigned";
+						assignHTML+="<tr><td>"+ArrayIntvUsername[i]+"</td><td style='color:green;'>"+outlabel+"</td></tr>";
+					} else {
+						outlabel="Already assigned this project or Failed";
+						assignHTML+="<tr><td>"+ArrayIntvUsername[i]+"</td><td style='color:red;'>"+outlabel+"</td></tr>";
+					}
+			}
+		}
+
+		assignHTML+="</table>";
+		document.getElementById("area2").innerHTML =assignHTML;
+
+	}
+}
+
+function GetLivePrjCount(tablongID) {
+		var x;
+	//extract started projects to LKarray
+	//	var xmlHttpm = new XMLHttpRequest();
+	//	xmlHttpm.open("GET","https://apiap.nfieldmr.com/v1/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started'", false); 
+	//	xmlHttpm.setRequestHeader("Content-Type","application/json");
+	//	xmlHttpm.setRequestHeader("Authorization", "Basic " + m_Token);	
+	//	xmlHttpm.send();
+
+	//	if (xmlHttpm.status==200) {
+		
+	//		LKarray = JSON.parse(xmlHttpm.responseText);
+	//	}
+		
+		
+		
+		//get tab assiged live started Project
+		var xmlHttp6 = new XMLHttpRequest();
+ 	    xmlHttp6.open("GET","https://apiap.nfieldmr.com/v1/Interviewers/"+tablongID+"/Assignments?$filter=Assigned eq true",false );
+ 	    xmlHttp6.setRequestHeader("Content-Type","application/json"); 
+ 	    xmlHttp6.setRequestHeader("Authorization","Basic "+ m_Token);
+ 	    xmlHttp6.send();
+		
+		if (xmlHttp6.status==200) {
+			var myObjx = JSON.parse(xmlHttp6.responseText);
+			var myObj=[];
+			for (let k = 0; k < LKarray.length; k++) {
+				for (x in myObjx){
+					if(myObjx[x].SurveyId == LKarray[k].SID){
+						myObj[myObj.length]=myObjx[x];
+						break;
+					}
+					
+				}
+			}
+		}
+		return myObj.length;
+	
+}
+
+
+
+function myStatus() {
+
+	if((document.getElementById("intv1").value == "none" && document.getElementById("intv2").value == "none" && document.getElementById("intv3").value == "none" && document.getElementById("intv4").value == "none" && document.getElementById("intv5").value == "none" && document.getElementById("intv6").value == "none" && document.getElementById("intv7").value == "none" && document.getElementById("intv8").value == "none" && document.getElementById("intv9").value == "none" && document.getElementById("intv10").value == "none") || (document.getElementById("surveylist").value == "none")){
+		alert("Please Select a project and at lease one tablet to proceed.");
+	} else {
+	
+		
+		var prjobj;
+		var sid;
+		var quotatxt;
+		var tottabs=0;
+        var tottabsactive=0;
+        var tottabsinactive=0;
+ 	    var totsuccess=0;
+        var totscreenout=0;
+        var totdropout=0;
+        var totreject=0;
+ 		var i,j;
+		var found=0;
+		const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+		
+		
+		document.getElementById("area2").innerHTML ="";
+		//get selected tablet
+		var Intvname1=document.getElementById("intv1").value
+		var Intvname2=document.getElementById("intv2").value
+		var Intvname3=document.getElementById("intv3").value
+		var Intvname4=document.getElementById("intv4").value
+		var Intvname5=document.getElementById("intv5").value
+		var Intvname6=document.getElementById("intv6").value
+		var Intvname7=document.getElementById("intv7").value
+		var Intvname8=document.getElementById("intv8").value
+		var Intvname9=document.getElementById("intv9").value
+		var Intvname10=document.getElementById("intv10").value
+		
+		ArrayIntv=[Intvname1,Intvname2,Intvname3,Intvname4,Intvname5,Intvname6,Intvname7,Intvname8,Intvname9,Intvname10];
+		for (i in ArrayIntv) {
+			if (ArrayIntv[i]=="(None)") {ArrayIntvId[i]="(None)";ArrayIntvUsername[i]="(None)";} else {
+				tabList.forEach(checkSelected);
+				function checkSelected(item, index, arr){
+					if(item.Lastfour==ArrayIntv[i]){
+						ArrayIntvId[i]=item.Longid;
+						ArrayIntvUsername[i]=item.Username;
+						return;
+					};
+				};
+			   //alert (i);
+			}
+		}
+		
+		//get survey Id
+		
+		prjobj = LKarray.filter(prj => prj.no == document.getElementById("surveylist").value);
+		sid=prjobj[0].SID;
+			
+		var xmlHttp2 = new XMLHttpRequest();
+ 	    xmlHttp2.open("GET","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/Interviewers",false );
+ 	    xmlHttp2.setRequestHeader("Content-Type","application/json"); 
+ 	    xmlHttp2.setRequestHeader("Authorization","Basic "+ m_Token);
+ 	    xmlHttp2.send();
+		
+		if (xmlHttp2.status==200) {
+		
+			var myObj = JSON.parse(xmlHttp2.responseText);
+ 	        quotatxt += "<br/><br/><table  id='taboutput' border='1'>";
+ 	        quotatxt += "<tr></tr>";
+ 	        quotatxt += "<tr>Update as at " + Date() + "</tr>";
+ 	        quotatxt += "<tr />";
+ 	        quotatxt += "<tr><th>Device ID</th><th>  Assigned  </th><th>  Active  </th><th style='color:#008000'>  Successful  </th><th>  Screened out  </th><th>  Dropped out  </th><th style='color:#FF0000'>  Rejected  </th><th>  Last sync date  </th><th>  Last sync successful  </th><th>  Full sync  </th></tr>";
+ 	        
+			for (i in ArrayIntv) {
+				let shouldSkip = false;
+				myObj.forEach(tabidinproject);
+				function tabidinproject(item, index, arr){
+					if (shouldSkip) {
+						return;
+					  }
+					if(item.InterviewerId==ArrayIntvId[i]){
+							found=1;
+							var xmlHttp3 = new XMLHttpRequest();
+						   xmlHttp3.open("GET","https://apiap.nfieldmr.com/v1/CapiInterviewers/"+ArrayIntvId[i],false );
+						   xmlHttp3.setRequestHeader("Content-Type", "application/json"); 
+						   xmlHttp3.setRequestHeader("Authorization", "Basic " + m_Token);
+						   xmlHttp3.send();
+						   var myObjInt = JSON.parse(xmlHttp3.responseText);
+						   var date=new Date(myObjInt.LastSyncDate);
+						   var dd=date.getDate();
+						   var mo=date.getMonth();
+						   var yy=date.getFullYear();
+						   var hh=date.getHours();
+						   var mi=date.getMinutes();
+						   var ss=date.getSeconds();
+						   var ndate= dd+"-"+month[mo]+"-"+yy+" "+hh+":"+mi+":"+ss+"  GMT +5.30";
+						   
+						   quotatxt += "<tr><td>"+myObjInt.UserName+"</td><td align='center'>"+ item.IsAssigned+"</td><td align='center'>"+ item.IsActive+"</td><td align='center' style='color:#008000'>"+ item.SuccessfulCount+"</td><td align='center'>"+ item.UnsuccessfulCount+"</td><td align='center'>"+ item.DroppedOutCount+"</td><td align='center' style='color:#FF0000'>"+ item.RejectedCount+"</td><td align='center'>"+ ndate+"</td><td align='center'>"+ myObjInt.IsLastSyncSuccessful+"</td><td align='center'>"+ myObjInt.IsFullSynced+"</td></tr>";
+						   totsuccess = totsuccess + item.SuccessfulCount;
+						   totscreenout = totscreenout + item.UnsuccessfulCount;
+						   totdropout = totdropout +item.DroppedOutCount;
+						   totreject = totreject+item.RejectedCount;
+							shouldSkip = true;
+					};
+					if(found=0){
+							quotatxt += "<tr><td>"+ ArrayIntvUsername[j]+"</td><td align='center'>not assigned</td><td align='center'>-</td><td align='center'>-</td><td align='center'>-</td><td align='center'>-</td><td align='center' style='color:#FF0000'>-</td><td align='center'>-</td><td align='center'>-</td><td align='center'>-</td></tr>";
+					};
+				};
+			}
+			
+			quotatxt += "<tr><th>TOTAL</th><th /><th /><th style='color:#008000'>"+totsuccess+"</th><th>"+totscreenout+"</th><th>"+totdropout+"</th><th style='color:#FF0000'>"+totreject+"</th></tr>";
+            quotatxt += "<tr />";
+            quotatxt += "<tr />";
+            quotatxt += "<tr />";
+            quotatxt += "<tr />";
+			quotatxt += "</table>";
+
+ 	        document.getElementById("area2").innerHTML =quotatxt; 
+		
+		} else{
+			alert("Project is not available in the system or internal issue");
+		};
+	
+	};
+
+}
+
+function myUnassign() {
+
+//alert("This service will come soon. This is under construction. Please use old sharepoint service page for this task.");
+var i;
+var prjobj;
+var sid;
+var outlabel;
+var assignHTML;
+document.getElementById("area2").innerHTML ="<p>Wait.....</p>";	
+	if((document.getElementById("intv1").value == "none" && document.getElementById("intv2").value == "none" && document.getElementById("intv3").value == "none" && document.getElementById("intv4").value == "none" && document.getElementById("intv5").value == "none" && document.getElementById("intv6").value == "none" && document.getElementById("intv7").value == "none" && document.getElementById("intv8").value == "none" && document.getElementById("intv9").value == "none" && document.getElementById("intv10").value == "none") || (document.getElementById("surveylist").value == "none")){
+		alert("Please Select a project and at lease one tablet to proceed.");
+	} else {
+	
+			//get selected tablet
+			var Intvname1=document.getElementById("intv1").value
+			var Intvname2=document.getElementById("intv2").value
+			var Intvname3=document.getElementById("intv3").value
+			var Intvname4=document.getElementById("intv4").value
+			var Intvname5=document.getElementById("intv5").value
+			var Intvname6=document.getElementById("intv6").value
+			var Intvname7=document.getElementById("intv7").value
+			var Intvname8=document.getElementById("intv8").value
+			var Intvname9=document.getElementById("intv9").value
+			var Intvname10=document.getElementById("intv10").value
+					
+			ArrayIntv=[Intvname1,Intvname2,Intvname3,Intvname4,Intvname5,Intvname6,Intvname7,Intvname8,Intvname9,Intvname10];
+				for (i in ArrayIntv) {
+					if (ArrayIntv[i]=="(None)") {ArrayIntvId[i]="(None)";ArrayIntvUsername[i]="(None)";} else {
+						tabList.forEach(checkSelected);
+						function checkSelected(item, index, arr){
+							if(item.Lastfour==ArrayIntv[i]){
+								ArrayIntvId[i]=item.Longid;
+								ArrayIntvUsername[i]=item.Username;
+								return;
+							};
+						};
+						   
+					}
+				}
+					
+			//get survey Id
+					
+			prjobj = LKarray.filter(prj => prj.no == document.getElementById("surveylist").value);
+			sid=prjobj[0].SID;
+			
+			
+			assignHTML+="<table border='1' cellspacing='0' cellpadding='5'><tr><th>Tablet ID</th><th>Assignment Status</th></tr>";
+			for (k in ArrayIntvId) {
+				outlabel="";
+				var xmlHttp9 = new XMLHttpRequest();
+				xmlHttp9.open("PUT","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/Assignment", false); 
+				xmlHttp9.setRequestHeader("Content-Type","application/json");
+				xmlHttp9.setRequestHeader("Authorization","Basic "+ m_Token);			
+				var obj9 = {"InterviewerId":ArrayIntvId[k],"Assign":false};
+				xmlHttp9.send(JSON.stringify(obj9));
+			
+				if (xmlHttp9.status==200) {
+					outlabel="Unassigned";
+					assignHTML+="<tr><td>"+ArrayIntvUsername[k]+"</td><td style='color:green;'>"+outlabel+"</td></tr>";
+				} else {
+					outlabel="Failed";
+					assignHTML+="<tr><td>"+ArrayIntvUsername[k]+"</td><td style='color:red;'>"+outlabel+"</td></tr>";
+				}
+			}
+			assignHTML+="</table>";
+			document.getElementById("area2").innerHTML =assignHTML;
+	}
+
+}
+
+function myFunctionC() {
+
+var txtList;
+
+//alert("This service will come soon. This is under construction. Please use old sharepoint service page for this task.");
+var Centerfilter;
+	switch(document.getElementById("center").value) {
+	case "east":
+    // code block
+	Centerfilter="eq 'East'";
+    break;
+	case "galle":
+    // code block
+	Centerfilter="eq 'Galle'";
+    break;
+	case "hof":
+    // code block
+	Centerfilter="eq 'Head Office Field (HOF)'";
+    break;
+	case "kandy":
+    // code block
+	Centerfilter="eq 'Kandy'";
+    break;
+	case "kurunegala":
+    // code block
+	Centerfilter="eq 'Kurunegala'";
+    break;
+	case "north":
+    // code block
+	Centerfilter="eq 'North'";
+    break;
+	case "all":
+    // code block
+	Centerfilter="ne 'NA'";
+    break;
+	default:
+    // code block
+	alert("Please select correct center before proceed.");
+	system.stop();
+	};
+
+	document.getElementById("area2").innerHTML = "";
+	document.getElementById("area1").innerHTML = "";
+	document.getElementById("area1").innerHTML = "<center><p>Wait.....</p></center>";
+
+//add dropdownbox and button when clean button Click
+     txtList +="<table border='0' cellspacing='0' cellpadding='20'><tr><td width='190px' valign='top'><font size='5'>Tablet Id</font><font color='red'>*</font></td><td width='180px' valign='top'><select id='intv1'><option value='none'>(None)</option></select></td><td><button id='tabrefresh' width='250px' onclick='myTabProject()' class='button'>Refresh Current Project List</button></td></tr>";
+	 txtList +="</table>";
+	 document.getElementById("area1").innerHTML =txtList;
+	 
+	 //dynamicaly adding options for clean dropdown box
+	 
+		var xmlHttpb = new XMLHttpRequest();
+		xmlHttpb.open("POST","https://prod-204.westeurope.logic.azure.com:443/workflows/5335c6e225cc4d9eaab64921fc85d3fc/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4In9cJjHbbnvjG6Q17C0ekJCv-ye7K-LA_PuKD0NoGc", false ); 
+		xmlHttpb.setRequestHeader("Content-Type","application/json");  
+		var objb = {"nkey":"TESTKEYXXXXXXXXX","Center":Centerfilter,"type":"tablist"};
+		xmlHttpb.send(JSON.stringify(objb));
+		
+		if (xmlHttpb.status==200) {
+			var aa = xmlHttpb.responseText;
+			//m_Token = aa.substring(24, 120);
+			tabList = JSON.parse(aa);
+			//alert (tabList.length);
+				const select1 = document.querySelector('#intv1');
+				
+				tabList.forEach(addseloption);
+				function addseloption(item, index, arr){
+					let newOption1 = new Option(item.Lastfour,item.Lastfour);
+					select1.add(newOption1,undefined);
+					
+				};
+		} else {
+			alert ("Error,Sharepoint has not given tablet list at the moment. please try it later. if it is unsuccess again, please contact scripting team.");
+		 }
+
+}
+
+function myTabProject(){
+var assigedList="";
+ArrayClean=[];
+document.getElementById("area2").innerHTML ="";
+//txtList=document.getElementById("area1").innerHTML;
+		//get selected tablet
+	Intvname1=document.getElementById("intv1").value
+		
+	if (Intvname1=="(None)") {ArrayIntvIdx="(None)";ArrayIntvUsernamex="(None)";} else {
+		tabList.forEach(checkSelected);
+		function checkSelected(item, index, arr){
+			if(item.Lastfour==Intvname1){
+				ArrayIntvIdx=item.Longid;
+				ArrayIntvUsernamex=item.Username;
+			};
+		};
+		
+		//extract started projects to LKarray
+		var xmlHttpm = new XMLHttpRequest();
+		xmlHttpm.open("GET","https://apiap.nfieldmr.com/v1/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started'", false); 
+		xmlHttpm.setRequestHeader("Content-Type","application/json");
+		xmlHttpm.setRequestHeader("Authorization", "Basic " + m_Token);	
+		xmlHttpm.send();
+
+		if (xmlHttpm.status==200) {
+		
+			LKarray = JSON.parse(xmlHttpm.responseText);
+		}
+		
+		
+		
+		var xmlHttp6 = new XMLHttpRequest();
+ 	    xmlHttp6.open("GET","https://apiap.nfieldmr.com/v1/Interviewers/"+ArrayIntvIdx+"/Assignments?$filter=Assigned eq true",false );
+ 	    xmlHttp6.setRequestHeader("Content-Type","application/json"); 
+ 	    xmlHttp6.setRequestHeader("Authorization","Basic "+ m_Token);
+ 	    xmlHttp6.send();
+		
+		if (xmlHttp6.status==200) {
+			var myObjx = JSON.parse(xmlHttp6.responseText);
+			var myObj=[];
+			for (let k = 0; k < LKarray.length; k++) {
+				for (x in myObjx){
+					if(myObjx[x].SurveyId == LKarray[k].SurveyId){
+						myObj[myObj.length]=myObjx[x];
+						break;
+					}
+					
+				}
+			}
+			
+			var i=0;
+			assigedList+="<br/><center><table border='1' cellspacing='0' cellpadding='5'><tr><td><button type='button' id='btnupdate' onclick='myClear()' class='button' name='btnClear' style='color:green;'>Update With Selected Projects</button><br/>Note:Fieldwork team is not allowing to clean sampling point studies! <br/>those will autmatically clean after closing the project.</td></tr>";
+			myObj.forEach(AssignedProjects);
+				function AssignedProjects(item, index, arr){
+					
+							ArrayClean[i]=item.SurveyId;
+							if(item.Discriminator=="SamplingPointsAssignment" && document.getElementById("center").value!="all"){
+								assigedList+="<tr><td><input type='checkbox' id='chk"+i+"' name='chkname"+i+"' value='val"+i+"' checked disabled>"+item.SurveyName+"</td></tr>";
+							} else {
+								assigedList+="<tr><td><input type='checkbox' id='chk"+i+"' name='chkname"+i+"' value='val"+i+"' checked>"+item.SurveyName+"</td></tr>";
+							}
+							i+=1;	
+				}
+			assigedList+="</table><br/><br/><p style='color:#FC8433'>Total Assigned Projects - "+i+"</p></center>";
+			document.getElementById("area2").innerHTML =assigedList;
+		
+		} else {
+		 alert ("Signin first and Check your Internet connectivity. Otherwise, Please contact scripting team");
+		 system.stop();
+		}	 
+	}
+		
+
+}
+
+function myClear(){
+//clean selected projects from nField
+if(confirm("Please confirm whether you need to clean tablet from unselected projects! ")==true){
+	document.getElementById("btnupdate").innnerHTML= ".....Wait.....";
+	var chkid;
+		for (let i = 0; i < ArrayClean.length; i++) {
+			chkid="chk"+i;
+			var chkid = document.getElementById(chkid);
+			if (chkid.checked == false){
+				var xmlHttpc = new XMLHttpRequest();
+				//xmlHttpc.open("PUT","https://apiap.nfieldmr.com/v1/Surveys/"+ArrayClean[i]+"/Assignment", false); 
+				xmlHttpc.open("PUT","https://apiap.nfieldmr.com/v1/Surveys/"+ArrayClean[i]+"/Interviewers/"+ArrayIntvIdx+"/Unassign", false);
+				xmlHttpc.setRequestHeader("Content-Type","application/json");
+				xmlHttpc.setRequestHeader("Authorization","Basic "+ m_Token);			
+				//var objc = {"InterviewerId":ArrayIntvIdx,"Assign":false};
+				//xmlHttpc.send(JSON.stringify(objc));
+				xmlHttpc.send();
+				
+				
+			}
+		}
+		myTabProject();
+}
+}
+
+
+
+
+
+//get sampling point survey name to list and get tablet list and available samling point to the dropdownbox
+
+
+
+function mySamplingPointS() {
+	var Centerfilter;
+	switch(document.getElementById("center").value) {
+	case "east":
+    // code block
+	Centerfilter="eq 'East'";
+    break;
+	case "galle":
+    // code block
+	Centerfilter="eq 'Galle'";
+    break;
+	case "hof":
+    // code block
+	Centerfilter="eq 'Head Office Field (HOF)'";
+    break;
+	case "kandy":
+    // code block
+	Centerfilter="eq 'Kandy'";
+    break;
+	case "kurunegala":
+    // code block
+	Centerfilter="eq 'Kurunegala'";
+    break;
+	case "north":
+    // code block
+	Centerfilter="eq 'North'";
+    break;
+	case "all":
+    // code block
+	Centerfilter="ne 'NA'";
+    break;
+	default:
+    // code block
+	alert("Please select correct center before proceed.");
+	//system.stop();
+	//location.reload();
+	return;
+	};
+	document.getElementById("area1").innerHTML = "";
+	document.getElementById("area2").innerHTML="";
+	document.getElementById("area1").innerHTML = "<center>Wait.....</center>";
+	
+	//adding project list to dropdown box
+	var LK_filter;
+	var t;
+	var x;
+	var y;
+	var i = 0;
+	var vobj;
+	var txtList;
+	
+	txtList="";
+	
+	var xmlHttpa = new XMLHttpRequest();
+    xmlHttpa.open("GET","https://apiap.nfieldmr.com/v1/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started' and SurveyType ne 'Basic'", false); 
+    xmlHttpa.setRequestHeader("Content-Type","application/json");
+	xmlHttpa.setRequestHeader("Authorization", "Basic " + m_Token);	
+	xmlHttpa.send();
+	  
+
+    if (xmlHttpa.status==200) {
+	
+    var aa = xmlHttpa.responseText;
+    //m_Token = aa.substring(24, 120);
+	LK_filter = JSON.parse(aa);
+	
+	for (x in LK_filter) {
+			
+			   if(LK_filter[x].ClientName == "LK" && LK_filter[x].SurveyState == 1) {
+				 vobj = {no:"" , SName:"" , SID:"" , Success:"", Reject:"", Description:""};
+				 vobj.no = i;
+				 vobj.SName = LK_filter[x].SurveyName;
+				 vobj.SID = LK_filter[x].SurveyId;
+				 vobj.SurveyState = LK_filter[x].SurveyState
+				 vobj.Description = LK_filter[x].Description
+				 LKarray[i] = vobj;
+				 i +=1;
+			   }
+			
+	}
+		
+		function compare(a, b) {
+		// Use toUpperCase() to ignore character casing
+		const bandA = a.SName.toUpperCase();
+		const bandB = b.SName.toUpperCase();
+
+		let comparison = 0;
+		if (bandA > bandB) {
+			comparison = 1;
+		  } else if (bandA < bandB) {
+		comparison = -1;
+		  }
+		return comparison;
+		}
+
+        LKarray.sort(compare);
+		LKarray.sort(function(a){return a.SName});
+		
+		txtList="<table cellpadding='10'><tr><td><font size='4'>Survey Name</font><font color='red'>*</font></td><td><select id='surveylist'><option value='none'>(None)</option>";
+		for(y in LKarray) {
+			txtList +="<option value='"+LKarray[y].no+"'>"+LKarray[y].SName+"</option>";
+		}
+		txtList +="</select></td></tr></table>";
+		//document.getElementById("area1").innerHTML =txtList;
+	
+	
+    } else {
+     alert ("Signin first and Check your Internet connectivity. Otherwise, Please contact scripting team");
+	 document.getElementById("area1").innerHTML = "";
+	 system.stop();
+     }	 
+	 
+	 
+	 //Adding center tablets to dropdown array
+	 
+	 txtList +="<br/><br/><table border='1' cellspacing='0' cellpadding='5'><tr><td width='190px' valign='top' rowspan='5'>Tablet Id (s)<font color='red'>*</font></td><td width='200px' valign='top'><select id='intv1' onchange='IntvChange()'><option value='none'>(None)</option></select></td><td><p><font size='3'>Click button to <b>fill available sampling point</b> and wait moment until filling the dropdown box.<br/>	Don't remove sampling point studies from your tablet until closing the project.<br/>Program is taking few seconds to fill and assign tablet to sampling points. please click wait button until complete your tasks.<br/>ඔබ බොත්තම ඔබා නිදහස් Sample Points කීපයක් dropdown මෙවලමට ලැබෙනතෙක් මොහොතක් රදීසිටින්න. <br/>ව්‍යාපෘතිය අවසන්වන තෙක් sampling point ව්‍යාපෘති ටබ්ලටයෙන්  ඉවත්කර නොගන්න.<br/>sampling point ව්‍යාපෘති ටැබ්ලටයට දාගැනීමට හා dropdown මෙවලම points එකතුකිරීමට‍ තප්පර කීපයක් ගතවනබැවින් ,කාර්ය නිමවනතෙක් wait බොත්තම ඔබන්න.</font></p><font color='red'>*</font></td><td width='200px' valign='top'><select id='samp1'><option value='none'>(None)</option></select><button id='getsampoint' width='250px' onclick='getavelsamppoints()' style='color:green;font-size: 12px;' class='button' value='Get all nField recommand sampling points'>Get all nField recommand sampling points</button></td>";
+	 
+	 txtList +="<td><button id='tabassign2S' width='250px' onclick='tabassign2S()' style='color:green;font-size: 12px;' class='button'>Assign tablets to all visits</button></td></tr>";
+	 txtList +="</table>";
+	 document.getElementById("area1").innerHTML =txtList;
+	 
+	 //dynamicaly adding options for dropdown boxes
+	 
+		var xmlHttpb = new XMLHttpRequest();
+		xmlHttpb.open("POST","https://prod-204.westeurope.logic.azure.com:443/workflows/5335c6e225cc4d9eaab64921fc85d3fc/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4In9cJjHbbnvjG6Q17C0ekJCv-ye7K-LA_PuKD0NoGc", false ); 
+		xmlHttpb.setRequestHeader("Content-Type","application/json");  
+		var objb = {"nkey":"TESTKEYXXXXXXXXX","Center":Centerfilter,"type":"tablist"};
+		xmlHttpb.send(JSON.stringify(objb));
+		
+		if (xmlHttpb.status==200) {
+			var aa = xmlHttpb.responseText;
+			//m_Token = aa.substring(24, 120);
+			tabList = JSON.parse(aa);
+			//alert (tabList.length);
+				const select1 = document.querySelector('#intv1');
+				tabList.forEach(addseloption);
+				function addseloption(item, index, arr){
+					//alert(item.Lastfour);
+					let newOption1 = new Option(item.Lastfour,item.Lastfour);
+					select1.add(newOption1,undefined);
+					
+				};
+		} else {
+			alert ("Error,Sharepoint has not given tablet list at the moment. please try it later. if it is unsuccess again, please contact scripting team.");
+		 }	
+		 
+ 
+	}
+
+
+
+function tabassign2S(){
+	var tabobj;
+	var spAssign;
+	var desSplit;
+	var arrayID=[];
+	var area2SPoutput;
+	var prjobj=[];
+	
+	area2SPoutput="";
+	if(document.getElementById("samp1").value=="none"){
+		alert("Please select a free sampling point for requested tablet ID before assign it to nField");
+	} else {
+		document.getElementById("area2").innerHTML="";
+		tabobj = tabList.filter(tab => tab.Lastfour == document.getElementById("intv1").value);
+		desSplit=sdes.split("\n");
+		let visitIndex=desSplit.indexOf("mvisit");
+		if(visitIndex>=0){
+			arrayID[0]=sid;
+			
+			for (let z = (visitIndex+1); z < desSplit.length; z++) {
+				arrayID.push(desSplit[z]);
+			}
+		}
+		
+		area2SPoutput="<table id='sptbarea2' border='1' cellspacing='0' cellpadding='5'><tr><th>Username</th><th>Project Name</th><th>Sampling Point ID</th><th>Status</th></tr>";
+		for (let j = 0; j < arrayID.length; j++) {
+			var xmlHttpq = new XMLHttpRequest();
+			xmlHttpq.open("POST","https://apiap.nfieldmr.com/v1/Surveys/"+arrayID[j]+"/SamplingPointsAssignments", false);
+			xmlHttpq.setRequestHeader("Content-Type","application/json");
+			xmlHttpq.setRequestHeader("Authorization", "Basic " + m_Token);
+			var objq = {"samplingPointIds":[document.getElementById("samp1").value],"interviewerIds":[tabobj[0].Longid]};
+			xmlHttpq.send(JSON.stringify(objq));
+		
+
+			if (xmlHttpq.status==200) {
+					var dd = xmlHttpq.responseText;
+					spAssign = JSON.parse(dd);
+					prjobj = LKarray.filter(prj => prj.SID == arrayID[j]);
+					area2SPoutput+="<tr><td>"+tabobj[0].Username+"</td><td>"+prjobj[0].SName+"</td><td>"+document.getElementById("samp1").value+"</td><td style='color:#3CB371'>Assigned</td></tr>";
+					document.getElementById("area2").innerHTML="<br/><br/>"+area2SPoutput+"</table>";
+			}
+		}
+		
+	}
+
+}
+
+
+
+
+function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
+
+function getavelsamppoints(){
+
+var prjobj=[];
+var spList;
+var spassignedList;
+var y;
+
+
+
+document.getElementById("samp1").innerHTML ="";
+document.getElementById("samp1").innerHTML = "<option value='none'>(None)</option>";
+
+prjobj = LKarray.filter(prj => prj.no == document.getElementById("surveylist").value);
+sid=prjobj[0].SID;
+sdes=prjobj[0].Description
+
+var xmlHttps = new XMLHttpRequest();
+xmlHttps.open("GET","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/SamplingPoints", false); 
+xmlHttps.setRequestHeader("Content-Type","application/json");
+xmlHttps.setRequestHeader("Authorization", "Basic " + m_Token);	
+xmlHttps.send();
+
+if (xmlHttps.status==200) {
+		var aa = xmlHttps.responseText;
+		spList = JSON.parse(aa);
+		function compare2(a, b) {
+		// Use toUpperCase() to ignore character casing
+		//const bandA = a.SamplingPointId.toUpperCase();
+		//const bandB = b.SamplingPointId.toUpperCase();
+		const bandA = Number(a.SamplingPointId);
+		const bandB = Number(b.SamplingPointId);
+
+		let comparison = 0;
+		if (bandA > bandB) {
+			comparison = 1;
+		  } else if (bandA < bandB) {
+		comparison = -1;
+		  }
+		return comparison;
+		}
+
+        spList.sort(compare2);
+		spList.sort(function(a){return a.SamplingPointId});
+		
+			const select1 = document.querySelector('#samp1');
+			spList.some(addseloption);
+			function addseloption(item, index, arr){
+				
+				var xmlHttpr = new XMLHttpRequest();
+				xmlHttpr.open("GET","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/SamplingPoints/"+item.SamplingPointId+"/Assignments", false); 
+				xmlHttpr.setRequestHeader("Content-Type","application/json");
+				xmlHttpr.setRequestHeader("Authorization", "Basic " + m_Token);	
+				xmlHttpr.send();
+				if (xmlHttpr.status==200) {
+					var bb = xmlHttpr.responseText;
+					spassignedList = JSON.parse(bb);
+					//for(y in spassignedList) {
+						if(spassignedList.length==0){
+							let newOption1 = new Option(item.Name,item.SamplingPointId);
+							select1.add(newOption1,undefined);
+						}
+						else if(document.getElementById("intv1").value==spassignedList[0].UserName.slice(-4)){
+							document.getElementById("samp1").innerHTML ="";
+							document.getElementById("samp1").innerHTML = "<option value='none'>(None)</option>";
+							let newOption1 = new Option(item.Name,item.SamplingPointId);
+							select1.add(newOption1,undefined);
+							if(spassignedList[0].Assigned==true){
+								alert("tab username "+spassignedList[0].UserName+" has already assigned to this project. No need assign this tablet again. please ask to interviewer to syncronize device properly and check project again")
+							}
+							return true;
+						}
+					//}
+				}
+				
+				
+				
+					
+			};
+			
+		} else {
+			alert ("Bad response from server");
+		 }
+
+
+}
+
+function IntvChange(){
+	document.getElementById("samp1").innerHTML ="";
+	document.getElementById("samp1").innerHTML = "<option value='none'>(None)</option>";
+}
+
+function myFunctionM(){
+	alert("This service is in under construction. Service will available soon.");
+}
+
+</script>
+
+</body>
+</html>
