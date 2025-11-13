@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>URL Parameter Display</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+    }
+    #displayText {
+      margin-top: 50px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="displayText"></div>
+
+  <script>
+  var myoutput;
+    // Function to get URL parameter by name
+    function getParameterByName(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+	
+	
+	//request API to get data from power automate
+	function getProjectData(outlet,nic){
+		var xmlHttp1 = new XMLHttpRequest();
+		xmlHttp1.open("POST","https://default1e355c04e0a442ed8e2d7351591f0e.f1.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/fb3edc719aac4d7c993c113bfb82b536/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=bWErRur4E9QYTtC0uvADcEaNk96L6m_eL6gcf4iOYEI", false ); 
+		xmlHttp1.setRequestHeader("Content-Type","application/json");  
+		var obj = {"outletid":outlet,"NIC":nic};
+		xmlHttp1.send(JSON.stringify(obj));
+		
+		if (xmlHttp1.status==200) {
+			var aa = xmlHttp1.responseText;
+			const obj = JSON.parse(aa);
+			myoutput = obj.value[0]["INTNR_x003a_ Interview number"];
+			document.getElementById('displayText').innerHTML=document.getElementById('displayText').textContent+"<br><table border='1' cellspacing='0' cellpadding='5' id='ot1'>"
+			+"<tr><td>Store Name</td><td>"+obj.value[0]["N11_x003a_ Store Name"]+"</td></tr>"
+			+"<tr><td>Store Address</td><td>"+obj.value[0]["N12_x003a_ Store Address"]+"</td></tr>"
+			+"<tr><td>Interview number</td><td>"+obj.value[0]["INTNR_x003a_ Interview number"]+"</td></tr>"
+			+"<tr><td>Selling Ice Cream</td><td>"+obj.value[0]["N16_x003a_ Selling Ice Cream"]+"</td></tr>"
+			+"<tr><td>EH Ice Cream Availability</td><td>"+obj.value[0]["N17_x003a_ EH Ice Cream Availability"]+"</td></tr>"
+			+"<tr><td>Selling Process Meat</td><td>"+obj.value[0]["N18_x003a_ Selling Process Meat"]+"</td></tr>"
+			+"<tr><td>Keells Process Meat Availability</td><td>"+obj.value[0]["N19_x003a_ Keells Process Meat Availability"]+"</td></tr>"
+			+"<tr><td>Selling Beverages</td><td>"+obj.value[0]["BN16_SellingBev_x003a_ BN16_Selling Beverages"]+"</td></tr>"
+			+"<tr><td>EH Beverages Availability</td><td>"+obj.value[0]["BN17_EH_Avail_x003a_ BN17_x003a_ EH Beverages Availability"]+"</td></tr>"
+			+"<tr><td>Exact Date</td><td>"+obj.value[0]["DATE_Value_x003a_ Exact Date"]+"</td></tr>"
+			+"</table>";
+		} else {
+			document.getElementById('displayText').textContent="Your outlet details has not stored in our database yet. please contact audited team";
+		 }
+	}
+	
+	
+
+    // Get the 'message' parameter from the URL
+    const outletid = getParameterByName('outletid');
+
+    // Display the message if it exists
+    if (outletid) {
+      document.getElementById('displayText').innerHTML = "This Outlet ID "+outletid;
+	  getProjectData(outletid,"842853927V")
+    } else {
+      document.getElementById('displayText').textContent = 'No ID passed in URL.';
+    }
+  </script>
+</body>
+</html>
