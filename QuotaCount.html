@@ -158,7 +158,7 @@ function myFunction1(){
 	LKarray=[];
 	
 	var xmlHttp1 = new XMLHttpRequest();
-    xmlHttp1.open("POST","https://prod-111.westeurope.logic.azure.com:443/workflows/9bbf31b3aa7d4a3d8e1ca03be7fc96f3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Km-25t2uwKFLHPyWTdsbOY0DeqwdLKUr9nhVdHvk_mI", false ); 
+    xmlHttp1.open("POST","https://default1e355c04e0a442ed8e2d7351591f0e.f1.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/9bbf31b3aa7d4a3d8e1ca03be7fc96f3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lOBzxatdBjSWD-HvAw2xipsutNGlnbbZHfdgJNX7XHA", false ); 
     xmlHttp1.setRequestHeader("Content-Type","application/json");  
     var obj = {"keyid":"abcd4321abcd","myemail":"nadun.gamage@kantar.com"};
     xmlHttp1.send(JSON.stringify(obj));
