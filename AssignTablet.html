@@ -106,7 +106,16 @@ a:hover, a:active {
   cursor: pointer;
 }
 
+.blink {
+    color: red;
+    font-weight: bold;
+    font-size: 24px; /* Increase size as needed */
+    animation: blinker 2s linear infinite; /* Slower blink (2 seconds) */
+}
 
+@keyframes blinker {
+    50% { opacity: 0; }
+}
 
 
 </style>
@@ -119,6 +128,8 @@ a:hover, a:active {
 <body>
 <center><H1><u><b>Tablet Assignment and Clean for CAPI Quota projects</b></u></H1></center>
 <center><font style='color:red;font-size: 16px;'>(Response time will be changed according to your internet connection speed!)</font></center>
+<!-- Immidiate blink news line -->
+<center><p class="blink">Please upgrade your android tablet to Android version 16 immediately to proper work of sampling point studies!!!</p></center>
 <br/>
 <table cellpadding=10>
 <tr><td><button type="button" onclick="myFunction1()" class="button" name="btnFormAction02">Click here login to nField</button></td></tr>
