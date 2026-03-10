@@ -1,0 +1,8 @@
+{
+  "status": "success",
+  "message": "Hello Nadun!",
+  "data": {
+    "user": "Nadun Gamage",
+    "role": "Developer"
+  }
+}
