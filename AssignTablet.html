@@ -1069,21 +1069,43 @@ function tabassign2S(){
 		
 		area2SPoutput="<table id='sptbarea2' border='1' cellspacing='0' cellpadding='5'><tr><th>Username</th><th>Project Name</th><th>Sampling Point ID</th><th>Status</th></tr>";
 		for (let j = 0; j < arrayID.length; j++) {
-			var xmlHttpq = new XMLHttpRequest();
-			xmlHttpq.open("POST","https://apiap.nfieldmr.com/v1/Surveys/"+arrayID[j]+"/SamplingPointsAssignments", false);
-			xmlHttpq.setRequestHeader("Content-Type","application/json");
-			xmlHttpq.setRequestHeader("Authorization", "Basic " + m_Token);
-			var objq = {"samplingPointIds":[document.getElementById("samp1").value],"interviewerIds":[tabobj[0].Longid]};
-			xmlHttpq.send(JSON.stringify(objq));
-		
+			
+				var xmlHttpr = new XMLHttpRequest();
+				xmlHttpr.open("GET","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/SamplingPoints/"+document.getElementById("samp1").value+"/Assignments", false); 
+				xmlHttpr.setRequestHeader("Content-Type","application/json");
+				xmlHttpr.setRequestHeader("Authorization", "Basic " + m_Token);	
+				xmlHttpr.send();
+				if (xmlHttpr.status==200) {
+					var bb = xmlHttpr.responseText;
+					spassignedList = JSON.parse(bb);
+					//for(y in spassignedList) {
+						if(spassignedList.length>0){
+							alert("Selected sampling point has already assigned to another tablet.Please select different sampling point no assign to this tablet.");
+							break;
+						}
+						else {
+							var xmlHttpq = new XMLHttpRequest();
+							xmlHttpq.open("POST","https://apiap.nfieldmr.com/v1/Surveys/"+arrayID[j]+"/SamplingPointsAssignments", false);
+							xmlHttpq.setRequestHeader("Content-Type","application/json");
+							xmlHttpq.setRequestHeader("Authorization", "Basic " + m_Token);
+							var objq = {"samplingPointIds":[document.getElementById("samp1").value],"interviewerIds":[tabobj[0].Longid]};
+							xmlHttpq.send(JSON.stringify(objq));
+						
 
-			if (xmlHttpq.status==200) {
-					var dd = xmlHttpq.responseText;
-					spAssign = JSON.parse(dd);
-					prjobj = LKarray.filter(prj => prj.SID == arrayID[j]);
-					area2SPoutput+="<tr><td>"+tabobj[0].Username+"</td><td>"+prjobj[0].SName+"</td><td>"+document.getElementById("samp1").value+"</td><td style='color:#3CB371'>Assigned</td></tr>";
-					document.getElementById("area2").innerHTML="<br/><br/>"+area2SPoutput+"</table>";
-			}
+							if (xmlHttpq.status==200) {
+									var dd = xmlHttpq.responseText;
+									spAssign = JSON.parse(dd);
+									prjobj = LKarray.filter(prj => prj.SID == arrayID[j]);
+									area2SPoutput+="<tr><td>"+tabobj[0].Username+"</td><td>"+prjobj[0].SName+"</td><td>"+document.getElementById("samp1").value+"</td><td style='color:#3CB371'>Assigned</td></tr>";
+									document.getElementById("area2").innerHTML="<br/><br/>"+area2SPoutput+"</table>";
+							}
+						}
+				}
+		
+		
+			
+			
+			
 		}
 		
 	}
@@ -1168,9 +1190,7 @@ if (xmlHttps.status==200) {
 							}
 							return true;
 						}
-						else {
-							alert("tab username "+spassignedList[0].UserName+" has already assigned to this sampling point. therefore You can't assign your tablet to this sampling point as multiple assignment in single sampling point. please select different sampling point to your device.")
-						}
+						
 					//}
 				}
 				
