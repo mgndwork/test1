@@ -234,9 +234,9 @@ function myFunctionS() {
 	
 	
 	var xmlHttpa = new XMLHttpRequest();
-    xmlHttpa.open("GET","https://apiap.nfieldmr.com/v1/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started'", false); 
+    xmlHttpa.open("GET","https://apiap.nfieldmr.com/v2/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started'", false); 
     xmlHttpa.setRequestHeader("Content-Type","application/json");
-	xmlHttpa.setRequestHeader("Authorization", "Basic " + m_Token);	
+	xmlHttpa.setRequestHeader("Authorization", "Bearer " + m_Token);	
 	xmlHttpa.send();
 	  
 
@@ -411,9 +411,9 @@ if((document.getElementById("intv1").value == "none" && document.getElementById(
 
 		//Get project Target
 		var xmlHttpm = new XMLHttpRequest();
-		xmlHttpm.open("GET","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/SurveyQuotaFrame", false); 
+		xmlHttpm.open("GET","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/SurveyQuotaFrame", false); 
 		xmlHttpm.setRequestHeader("Content-Type","application/json");
-		xmlHttpm.setRequestHeader("Authorization", "Basic " + m_Token);	
+		xmlHttpm.setRequestHeader("Authorization", "Bearer " + m_Token);	
 		xmlHttpm.send();
 
 		if (xmlHttpm.status==200) {
@@ -436,17 +436,17 @@ if((document.getElementById("intv1").value == "none" && document.getElementById(
 			} else {
 					
 					var xmlHttp7 = new XMLHttpRequest();
-					xmlHttp7.open("POST","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/Interviewers", false); 
+					xmlHttp7.open("POST","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/Interviewers", false); 
 					xmlHttp7.setRequestHeader("Content-Type","application/json");
-					xmlHttp7.setRequestHeader("Authorization","Basic "+ m_Token);			
+					xmlHttp7.setRequestHeader("Authorization","Bearer "+ m_Token);			
 					var obj7 = {"InterviewerId":ArrayIntvId[i]};
 					xmlHttp7.send(JSON.stringify(obj7));
 					
 					if (xmlHttp7.status==200) {
 						var xmlHttp8 = new XMLHttpRequest();
-						xmlHttp8.open("POST","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/Distribute", false); 
+						xmlHttp8.open("POST","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/Distribute", false); 
 						xmlHttp8.setRequestHeader("Content-Type","application/json");
-						xmlHttp8.setRequestHeader("Authorization","Basic "+ m_Token);			
+						xmlHttp8.setRequestHeader("Authorization","Bearer "+ m_Token);			
 						var obj8 = {"Description":"","SurveyGrossTargetToDistribute":prjtarget,"InterviewerIds":[ArrayIntvId[i]]};
 						xmlHttp8.send(JSON.stringify(obj8));
 					}
@@ -475,7 +475,7 @@ function GetLivePrjCount(tablongID) {
 		var x;
 	//extract started projects to LKarray
 	//	var xmlHttpm = new XMLHttpRequest();
-	//	xmlHttpm.open("GET","https://apiap.nfieldmr.com/v1/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started'", false); 
+	//	xmlHttpm.open("GET","https://apiap.nfieldmr.com/v2/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started'", false); 
 	//	xmlHttpm.setRequestHeader("Content-Type","application/json");
 	//	xmlHttpm.setRequestHeader("Authorization", "Basic " + m_Token);	
 	//	xmlHttpm.send();
@@ -489,9 +489,9 @@ function GetLivePrjCount(tablongID) {
 		
 		//get tab assiged live started Project
 		var xmlHttp6 = new XMLHttpRequest();
- 	    xmlHttp6.open("GET","https://apiap.nfieldmr.com/v1/Interviewers/"+tablongID+"/Assignments?$filter=Assigned eq true",false );
+ 	    xmlHttp6.open("GET","https://apiap.nfieldmr.com/v2/capiInterviewers/"+tablongID+"/Assignments?$filter=Assigned eq true",false );
  	    xmlHttp6.setRequestHeader("Content-Type","application/json"); 
- 	    xmlHttp6.setRequestHeader("Authorization","Basic "+ m_Token);
+ 	    xmlHttp6.setRequestHeader("Authorization","Bearer "+ m_Token);
  	    xmlHttp6.send();
 		
 		if (xmlHttp6.status==200) {
@@ -569,9 +569,9 @@ function myStatus() {
 		sid=prjobj[0].SID;
 			
 		var xmlHttp2 = new XMLHttpRequest();
- 	    xmlHttp2.open("GET","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/Interviewers",false );
+ 	    xmlHttp2.open("GET","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/Interviewers",false );
  	    xmlHttp2.setRequestHeader("Content-Type","application/json"); 
- 	    xmlHttp2.setRequestHeader("Authorization","Basic "+ m_Token);
+ 	    xmlHttp2.setRequestHeader("Authorization","Bearer "+ m_Token);
  	    xmlHttp2.send();
 		
 		if (xmlHttp2.status==200) {
@@ -593,9 +593,9 @@ function myStatus() {
 					if(item.InterviewerId==ArrayIntvId[i]){
 							found=1;
 							var xmlHttp3 = new XMLHttpRequest();
-						   xmlHttp3.open("GET","https://apiap.nfieldmr.com/v1/CapiInterviewers/"+ArrayIntvId[i],false );
+						   xmlHttp3.open("GET","https://apiap.nfieldmr.com/v2/CapiInterviewers/"+ArrayIntvId[i],false );
 						   xmlHttp3.setRequestHeader("Content-Type", "application/json"); 
-						   xmlHttp3.setRequestHeader("Authorization", "Basic " + m_Token);
+						   xmlHttp3.setRequestHeader("Authorization", "Bearer " + m_Token);
 						   xmlHttp3.send();
 						   var myObjInt = JSON.parse(xmlHttp3.responseText);
 						   var date=new Date(myObjInt.LastSyncDate);
@@ -687,11 +687,12 @@ document.getElementById("area2").innerHTML ="<p>Wait.....</p>";
 			for (k in ArrayIntvId) {
 				outlabel="";
 				var xmlHttp9 = new XMLHttpRequest();
-				xmlHttp9.open("PUT","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/Assignment", false); 
+				xmlHttp9.open("PUT","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/interviewers/"+ArrayIntvId[k]+"/unassign", false);
 				xmlHttp9.setRequestHeader("Content-Type","application/json");
-				xmlHttp9.setRequestHeader("Authorization","Basic "+ m_Token);			
-				var obj9 = {"InterviewerId":ArrayIntvId[k],"Assign":false};
-				xmlHttp9.send(JSON.stringify(obj9));
+				xmlHttp9.setRequestHeader("Authorization","Bearer "+ m_Token);			
+				//var obj9 = {"InterviewerId":ArrayIntvId[k],"Assign":false};
+				//xmlHttp9.send(JSON.stringify(obj9));
+				xmlHttp9.send();
 			
 				if (xmlHttp9.status==200) {
 					outlabel="Unassigned";
@@ -803,9 +804,9 @@ document.getElementById("area2").innerHTML ="";
 		
 		//extract started projects to LKarray
 		var xmlHttpm = new XMLHttpRequest();
-		xmlHttpm.open("GET","https://apiap.nfieldmr.com/v1/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started'", false); 
+		xmlHttpm.open("GET","https://apiap.nfieldmr.com/v2/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started'", false); 
 		xmlHttpm.setRequestHeader("Content-Type","application/json");
-		xmlHttpm.setRequestHeader("Authorization", "Basic " + m_Token);	
+		xmlHttpm.setRequestHeader("Authorization", "Bearer " + m_Token);	
 		xmlHttpm.send();
 
 		if (xmlHttpm.status==200) {
@@ -816,9 +817,9 @@ document.getElementById("area2").innerHTML ="";
 		
 		
 		var xmlHttp6 = new XMLHttpRequest();
- 	    xmlHttp6.open("GET","https://apiap.nfieldmr.com/v1/Interviewers/"+ArrayIntvIdx+"/Assignments?$filter=Assigned eq true",false );
+ 	    xmlHttp6.open("GET","https://apiap.nfieldmr.com/v2/capiInterviewers/"+ArrayIntvIdx+"/Assignments?$filter=Assigned eq true",false );
  	    xmlHttp6.setRequestHeader("Content-Type","application/json"); 
- 	    xmlHttp6.setRequestHeader("Authorization","Basic "+ m_Token);
+ 	    xmlHttp6.setRequestHeader("Authorization","Bearer "+ m_Token);
  	    xmlHttp6.send();
 		
 		if (xmlHttp6.status==200) {
@@ -869,8 +870,8 @@ if(confirm("Please confirm whether you need to clean tablet from unselected proj
 			var chkid = document.getElementById(chkid);
 			if (chkid.checked == false){
 				var xmlHttpc = new XMLHttpRequest();
-				//xmlHttpc.open("PUT","https://apiap.nfieldmr.com/v1/Surveys/"+ArrayClean[i]+"/Assignment", false); 
-				xmlHttpc.open("PUT","https://apiap.nfieldmr.com/v1/Surveys/"+ArrayClean[i]+"/Interviewers/"+ArrayIntvIdx+"/Unassign", false);
+				//xmlHttpc.open("PUT","https://apiap.nfieldmr.com/v2/Surveys/"+ArrayClean[i]+"/Assignment", false); 
+				xmlHttpc.open("PUT","https://apiap.nfieldmr.com/v2/Surveys/"+ArrayClean[i]+"/Interviewers/"+ArrayIntvIdx+"/Unassign", false);
 				xmlHttpc.setRequestHeader("Content-Type","application/json");
 				xmlHttpc.setRequestHeader("Authorization","Basic "+ m_Token);			
 				//var objc = {"InterviewerId":ArrayIntvIdx,"Assign":false};
@@ -946,7 +947,7 @@ function mySamplingPointS() {
 	txtList="";
 	
 	var xmlHttpa = new XMLHttpRequest();
-    xmlHttpa.open("GET","https://apiap.nfieldmr.com/v1/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started' and SurveyType ne 'Basic'", false); 
+    xmlHttpa.open("GET","https://apiap.nfieldmr.com/v2/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started' and SurveyType ne 'Basic'", false); 
     xmlHttpa.setRequestHeader("Content-Type","application/json");
 	xmlHttpa.setRequestHeader("Authorization", "Basic " + m_Token);	
 	xmlHttpa.send();
@@ -1071,23 +1072,23 @@ function tabassign2S(){
 		for (let j = 0; j < arrayID.length; j++) {
 			
 				var xmlHttpr = new XMLHttpRequest();
-				xmlHttpr.open("GET","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/SamplingPoints/"+document.getElementById("samp1").value+"/Assignments", false); 
+				xmlHttpr.open("GET","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/SamplingPoints/"+document.getElementById("samp1").value+"/Assignments", false); 
 				xmlHttpr.setRequestHeader("Content-Type","application/json");
-				xmlHttpr.setRequestHeader("Authorization", "Basic " + m_Token);	
+				xmlHttpr.setRequestHeader("Authorization", "Bearer " + m_Token);	
 				xmlHttpr.send();
 				if (xmlHttpr.status==200) {
 					var bb = xmlHttpr.responseText;
 					spassignedList = JSON.parse(bb);
 					//for(y in spassignedList) {
 						if(spassignedList.length>0){
-							alert("Selected sampling point has already assigned to another tablet now.Please select different sampling point no assign to your tablet.");
+							alert("Selected sampling point has already assigned to another tablet.Please select different sampling point no assign to this tablet.");
 							break;
 						}
 						else {
 							var xmlHttpq = new XMLHttpRequest();
-							xmlHttpq.open("POST","https://apiap.nfieldmr.com/v1/Surveys/"+arrayID[j]+"/SamplingPointsAssignments", false);
+							xmlHttpq.open("POST","https://apiap.nfieldmr.com/v2/Surveys/"+arrayID[j]+"/SamplingPointsAssignments", false);
 							xmlHttpq.setRequestHeader("Content-Type","application/json");
-							xmlHttpq.setRequestHeader("Authorization", "Basic " + m_Token);
+							xmlHttpq.setRequestHeader("Authorization", "Bearer " + m_Token);
 							var objq = {"samplingPointIds":[document.getElementById("samp1").value],"interviewerIds":[tabobj[0].Longid]};
 							xmlHttpq.send(JSON.stringify(objq));
 						
@@ -1136,9 +1137,9 @@ sid=prjobj[0].SID;
 sdes=prjobj[0].Description
 
 var xmlHttps = new XMLHttpRequest();
-xmlHttps.open("GET","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/SamplingPoints", false); 
+xmlHttps.open("GET","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/SamplingPoints", false); 
 xmlHttps.setRequestHeader("Content-Type","application/json");
-xmlHttps.setRequestHeader("Authorization", "Basic " + m_Token);	
+xmlHttps.setRequestHeader("Authorization", "Bearer " + m_Token);	
 xmlHttps.send();
 
 if (xmlHttps.status==200) {
@@ -1168,9 +1169,9 @@ if (xmlHttps.status==200) {
 			function addseloption(item, index, arr){
 				
 				var xmlHttpr = new XMLHttpRequest();
-				xmlHttpr.open("GET","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/SamplingPoints/"+item.SamplingPointId+"/Assignments", false); 
+				xmlHttpr.open("GET","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/SamplingPoints/"+item.SamplingPointId+"/Assignments", false); 
 				xmlHttpr.setRequestHeader("Content-Type","application/json");
-				xmlHttpr.setRequestHeader("Authorization", "Basic " + m_Token);	
+				xmlHttpr.setRequestHeader("Authorization", "Bearer " + m_Token);	
 				xmlHttpr.send();
 				if (xmlHttpr.status==200) {
 					var bb = xmlHttpr.responseText;

@@ -141,7 +141,7 @@ th {
 
 
 <script>
-var m_Token;
+var m_Token="eyJhbGciOiJSUzI1NiIsImtpZCI6IkM1MkZENzZBQ0FCNDIyOUJDRDQ1Q0JCQTg4MDk5Mjg5IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwczovL2lkZW50aXR5YXAubmZpZWxkbXIuY29tIiwibmJmIjoxNzc5ODEwNDQ1LCJpYXQiOjE3Nzk4MTA0NDUsImV4cCI6MTc3OTgxMTA0NSwic2NvcGUiOlsiY2xpZW50T3JpZ2luIiwiZW1haWwiLCJuZmllbGREb21haW4iLCJvcGVuaWQiLCJwcm9maWxlIiwicmVzb3VyY2VSb2xlcyIsInJvbGVzIiwib2ZmbGluZV9hY2Nlc3MiXSwiYW1yIjpbInB3ZCJdLCJjbGllbnRfaWQiOiJwdWJsaWMtYXBpIiwic3ViIjoiNWU3Njc2Y2QtNDVkNy00YjFiLWE3YjItMGNiMjdlMjY1N2EwY2ZkZWMzOGQtNTM2YS00MDYxLWJlYjEtZTEyNDdlNDcwNTdjIiwiYXV0aF90aW1lIjoxNzc5ODEwNDQ1LCJpZHAiOiJsb2NhbCIsIklkZW50aXR5VHlwZSI6Im5hdGl2ZSIsIlVubGF5ZXJTaWduYXR1cmUiOiJjNjNlMTQ4Mjg5ZjUwZTkyMzdlMzg1MDE3NmI2NjMyY2I5NDNiYTIwZDk4YWJhYmRjMjM0MTAzMGYwMTU4YjhkIiwiQ2xpZW50T3JpZ2luIjoicHVibGljLWFwaSIsIkRvbWFpbklkIjoiNWU3Njc2Y2QtNDVkNy00YjFiLWE3YjItMGNiMjdlMjY1N2EwIiwiRG9tYWluTmFtZSI6IklNUkIiLCJEb21haW5QdWJsaWNJZCI6IjJBMXE3IiwiVXNlcklkIjoiY2ZkZWMzOGQtNTM2YS00MDYxLWJlYjEtZTEyNDdlNDcwNTdjIiwiVXNlck5hbWUiOiJuYWR1bi5nYW1hZ2UiLCJBdmFpbGFibGVDaGFubmVscyI6IkNhcGkiLCJEb21haW5BY2Nlc3NpYmlsaXR5UmVzdHJpY3Rpb25UeXBlIjoiMCIsIkRvbWFpbkVuYWJsZWRGZWF0dXJlcyI6IkZFQVRVUkVfRE9NQUlOX0NMRUFOX1VQLEZFQVRVUkVfUFJPVklTSU9OX1JFUE9SVElORyxGRUFUVVJFX1JFUE9SVElORyxGRUFUVVJFX0RBVEFfUkVQT1NJVE9SSUVTLEZFQVRVUkVfS0FOVEFSX0lOQ0lERU5DRV9SRVBPUlQsRkVBVFVSRV9SRVBPUlRJTkdfQ0FQSSxGRUFUVVJFX0FMTE9XX01BTlVBTF9TWU5DLEZFQVRVUkVfUFJPVklTSU9OX0VWRU5UUyxGRUFUVVJFX0FQSV9BQ0NFU1MsRkVBVFVSRV9RVUVTVElPTk5BSVJFX1NDUklQVElORyxGRUFUVVJFX01BU0tfU0FNUExFX0RBVEEsRkVBVFVSRV9RVUFMSVRZX0FTU1VSQU5DRV9FWFRFTlNJT04sRkVBVFVSRV9BTExPV19VTkZJWEVEX1BPU0lUSU9OUyxGRUFUVVJFX1FVT1RBX1RBUkdFVEFCTEUsRkVBVFVSRV9RVU9UQV9GT1JfQUxMT0NBVElPTl9PTkxZIiwicm9sZSI6IlJlZ3VsYXJVc2VyIiwianRpIjoiMTQ2OTk0RDk5RDhEMkFCMTMyMzY4ODNDOEM3QjQ2NEUifQ.Ye_B3aFwjvqC-skkHiUsYDrRWdpUIKNQBigpT93KVMODr6zFrJqBDNxL9oko4nG9NT15UsiW5DCru0encskZW84m9fMwIWKzr91_GGtdZa24CgePady8CpzHfdV-SW3topE4wUaevTCtc8dnw6Sh8-_p8865uyY9sMCKU6equmtZyS8eZyv_bMZjaBM4a_s0ehMPF764eiYz2yq3cm7wpj2bCtZWbWsgrOJ97C16UVW9KgUHppZnz6VH2FlyPGoYJf2ifMhw8uEkLBoL7GaUSZVUQKlaF_K2XfReaF18QLK6vwhTvuqeqQp736oe-PPrYMjl5aDOAuyTcy3_E4FoHg";
 var LKarray = [];
 var LK_filter;
 var t;
@@ -180,9 +180,9 @@ function myFunction1(){
 	
 	
 	var xmlHttpa = new XMLHttpRequest();
-    xmlHttpa.open("GET","https://apiap.nfieldmr.com/v1/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started'", false); 
+    xmlHttpa.open("GET","https://apiap.nfieldmr.com/v2/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started'", false); 
     xmlHttpa.setRequestHeader("Content-Type","application/json");
-	xmlHttpa.setRequestHeader("Authorization", "Basic " + m_Token);	
+	xmlHttpa.setRequestHeader("Authorization", "Bearer " + m_Token);	
 	xmlHttpa.send();
 	  
 
@@ -294,18 +294,18 @@ if(document.getElementById("surveylist").value == "none"){
 			
 			//Get project Target
 			var xmlHttpm = new XMLHttpRequest();
-			xmlHttpm.open("GET","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/Counts", false); 
+			xmlHttpm.open("GET","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/Counts", false); 
 			xmlHttpm.setRequestHeader("Content-Type","application/json");
-			xmlHttpm.setRequestHeader("Authorization", "Basic " + m_Token);	
+			xmlHttpm.setRequestHeader("Authorization", "Bearer " + m_Token);	
 			xmlHttpm.send();
 
 			if (xmlHttpm.status==200) {
 				var quotaObj = JSON.parse(xmlHttpm.responseText);
 				//add quality control count
 				var xmlHttpq = new XMLHttpRequest();
-				xmlHttpq.open("GET","https://apiap.nfieldmr.com/v1/Surveys/"+sid+"/InterviewQuality", false); 
+				xmlHttpq.open("GET","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/InterviewQuality", false); 
 				xmlHttpq.setRequestHeader("Content-Type","application/json");
-				xmlHttpq.setRequestHeader("Authorization", "Basic " + m_Token);	
+				xmlHttpq.setRequestHeader("Authorization", "Bearer " + m_Token);	
 				xmlHttpq.send();
 				if (xmlHttpq.status==200) {
 					var qcObj = JSON.parse(xmlHttpq.responseText);
@@ -374,7 +374,7 @@ if(document.getElementById("surveylist").value == "none"){
 				
 				//get all tablist from sharepoint and get tab center and Owner
 				var xmlHttpb = new XMLHttpRequest();
-				xmlHttpb.open("POST","https://prod-204.westeurope.logic.azure.com:443/workflows/5335c6e225cc4d9eaab64921fc85d3fc/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4In9cJjHbbnvjG6Q17C0ekJCv-ye7K-LA_PuKD0NoGc", false ); 
+				xmlHttpb.open("POST","https://default1e355c04e0a442ed8e2d7351591f0e.f1.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5335c6e225cc4d9eaab64921fc85d3fc/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kzGZAPAlre2av16OMcNsRrdD7afdt_IAR_Dob9iZF-4", false ); 
 				xmlHttpb.setRequestHeader("Content-Type","application/json");  
 				var objb = {"nkey":"TESTKEYXXXXXXXXX","Center":"ne 'NA'","type":"tablist"};
 				xmlHttpb.send(JSON.stringify(objb));
