@@ -873,7 +873,7 @@ if(confirm("Please confirm whether you need to clean tablet from unselected proj
 				//xmlHttpc.open("PUT","https://apiap.nfieldmr.com/v2/Surveys/"+ArrayClean[i]+"/Assignment", false); 
 				xmlHttpc.open("PUT","https://apiap.nfieldmr.com/v2/Surveys/"+ArrayClean[i]+"/Interviewers/"+ArrayIntvIdx+"/Unassign", false);
 				xmlHttpc.setRequestHeader("Content-Type","application/json");
-				xmlHttpc.setRequestHeader("Authorization","Basic "+ m_Token);			
+				xmlHttpc.setRequestHeader("Authorization","Bearer "+ m_Token);			
 				//var objc = {"InterviewerId":ArrayIntvIdx,"Assign":false};
 				//xmlHttpc.send(JSON.stringify(objc));
 				xmlHttpc.send();
