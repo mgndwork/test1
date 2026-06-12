@@ -158,7 +158,7 @@ function myFunction1(){
 	LKarray=[];
 	
 	var xmlHttp1 = new XMLHttpRequest();
-    xmlHttp1.open("POST","https://default1e355c04e0a442ed8e2d7351591f0e.f1.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/9bbf31b3aa7d4a3d8e1ca03be7fc96f3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lOBzxatdBjSWD-HvAw2xipsutNGlnbbZHfdgJNX7XHA", false ); 
+    xmlHttp1.open("POST","https://3e758dc9e5fae407bd62c513aea0fc.48.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/b10b9fa7d2b04b4c8c6c1e2cfd840b4e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=aqgjBdWL1laB012NXOFDYV7A12HAAAZkdgjW-wg_1BQ", false ); 
     xmlHttp1.setRequestHeader("Content-Type","application/json");  
     var obj = {"keyid":"abcd4321abcd","myemail":"nadun.gamage@kantar.com"};
     xmlHttp1.send(JSON.stringify(obj));
@@ -374,7 +374,7 @@ if(document.getElementById("surveylist").value == "none"){
 				
 				//get all tablist from sharepoint and get tab center and Owner
 				var xmlHttpb = new XMLHttpRequest();
-				xmlHttpb.open("POST","https://default1e355c04e0a442ed8e2d7351591f0e.f1.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5335c6e225cc4d9eaab64921fc85d3fc/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kzGZAPAlre2av16OMcNsRrdD7afdt_IAR_Dob9iZF-4", false ); 
+				xmlHttpb.open("POST","https://3e758dc9e5fae407bd62c513aea0fc.48.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/c012b848378843ee9006da1bd7479473/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=BkwOa4LA1sw4AI2f5ElzwfD_Z8ZrSOjQSe5LX2DwCwY", false ); 
 				xmlHttpb.setRequestHeader("Content-Type","application/json");  
 				var objb = {"nkey":"TESTKEYXXXXXXXXX","Center":"ne 'NA'","type":"tablist"};
 				xmlHttpb.send(JSON.stringify(objb));
