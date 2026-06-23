@@ -118,6 +118,62 @@ a:hover, a:active {
 }
 
 
+body {
+    margin: 0;
+}
+
+.news-bar {
+    width: 100%;
+    height: 40px;
+    background: #d50000;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.latest {
+    background: #a00000;
+    color: white;
+    font-weight: bold;
+    padding: 0 15px;
+    height: 40px;
+    line-height: 40px;
+    flex-shrink: 0;
+    z-index: 2;
+}
+
+.ticker-container {
+    flex: 1;
+    overflow: hidden;
+}
+
+.ticker {
+    display: inline-block;
+    white-space: nowrap;
+    color: white;
+    line-height: 40px;
+    padding-left: 100%;
+    animation: ticker-scroll 60s linear infinite;
+	
+	
+	font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+
+}
+
+@keyframes ticker-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+
+
+
 </style>
 
 
@@ -126,6 +182,13 @@ a:hover, a:active {
 
 
 <body>
+<div class="news-bar">
+    <div class="latest">Latest</div>
+
+    <div class="ticker-container">
+        <div class="ticker" id="newsTicker"></div>
+    </div>
+</div>
 <center><H1><u><b>Tablet Assignment and Clean for CAPI Quota projects</b></u></H1></center>
 <center><font style='color:red;font-size: 16px;'>(Response time will be changed according to your internet connection speed!)</font></center>
 <!-- Immidiate blink news line -->
@@ -153,6 +216,18 @@ var ArrayClean=[];
 var Intvname1;
 var sid;
 var sdes;
+
+
+
+const newsItems = [
+    "Maximum 8 live projects can be only assigned to the one tablet. Please clean your project from your tablet after completing your fieldwork. This task will save your tablet data bundle.",
+    "Sampling point project cleaning is not allowing to fieldwork team.",
+    "Please downgrade your nField version to 2.39.1. This version is very stable version for quota blocking. Latest fixed version will release by NIPO team soon. Please contact Pushpamal if you need any additional help.",
+    "Interviewer needs to syncronize their tablets daily."
+];
+
+document.getElementById("newsTicker").innerHTML =
+    newsItems.join(" &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; ");
 
 
 function myRefresh(){
@@ -430,8 +505,8 @@ if((document.getElementById("intv1").value == "none" && document.getElementById(
 			let m = GetLivePrjCount(ArrayIntvId[i]);
 			
 			//alert(m+"-id"+ArrayIntvId[i]);
-			if(m>12){
-				outlabel="Failed.This device has "+m+"Live projects. Maximum live assignments are 12. Please clean exsisting projects before assign new project";
+			if(m>8){
+				outlabel="Failed.This device has "+m+"Live projects. Maximum live assignments are 8. Please clean exsisting projects before assign new project";
 				assignHTML+="<tr><td>"+ArrayIntvUsername[i]+"</td><td style='color:red;'>"+outlabel+"</td></tr>";
 			} else {
 					
@@ -1215,6 +1290,9 @@ function IntvChange(){
 function myFunctionM(){
 	alert("This service is in under construction. Service will available soon.");
 }
+
+
+
 
 </script>
 
