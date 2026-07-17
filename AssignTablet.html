@@ -1156,8 +1156,8 @@ function tabassign2S(){
 					spassignedList = JSON.parse(bb);
 					//for(y in spassignedList) {
 						if(spassignedList.length>0){
-							alert("Selected sampling point has already assigned to another tablet.Please select different sampling point no assign to this tablet.");
-							break;
+							alert("Selected sampling point has already assigned to a tablet.Please select different free sampling point to this tablet. if you are unsure,syncronize tablet first and try it again");
+							//break;
 						}
 						else {
 							var xmlHttpq = new XMLHttpRequest();
