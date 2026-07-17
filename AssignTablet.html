@@ -1145,9 +1145,9 @@ function tabassign2S(){
 		
 		area2SPoutput="<table id='sptbarea2' border='1' cellspacing='0' cellpadding='5'><tr><th>Username</th><th>Project Name</th><th>Sampling Point ID</th><th>Status</th></tr>";
 		for (let j = 0; j < arrayID.length; j++) {
-			
+				
 				var xmlHttpr = new XMLHttpRequest();
-				xmlHttpr.open("GET","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/SamplingPoints/"+document.getElementById("samp1").value+"/Assignments", false); 
+				xmlHttpr.open("GET","https://apiap.nfieldmr.com/v2/Surveys/"+arrayID[j]+"/SamplingPoints/"+document.getElementById("samp1").value+"/Assignments", false); 
 				xmlHttpr.setRequestHeader("Content-Type","application/json");
 				xmlHttpr.setRequestHeader("Authorization", "Bearer " + m_Token);	
 				xmlHttpr.send();
