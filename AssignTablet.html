@@ -552,7 +552,7 @@ function GetLivePrjCount(tablongID) {
 	//	var xmlHttpm = new XMLHttpRequest();
 	//	xmlHttpm.open("GET","https://apiap.nfieldmr.com/v2/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started'", false); 
 	//	xmlHttpm.setRequestHeader("Content-Type","application/json");
-	//	xmlHttpm.setRequestHeader("Authorization", "Basic " + m_Token);	
+	//	xmlHttpm.setRequestHeader("Authorization", "Bearer " + m_Token);	
 	//	xmlHttpm.send();
 
 	//	if (xmlHttpm.status==200) {
@@ -1024,7 +1024,7 @@ function mySamplingPointS() {
 	var xmlHttpa = new XMLHttpRequest();
     xmlHttpa.open("GET","https://apiap.nfieldmr.com/v2/Surveys?$filter=ClientName eq 'LK' and SurveyState eq 'Started' and SurveyType ne 'Basic'", false); 
     xmlHttpa.setRequestHeader("Content-Type","application/json");
-	xmlHttpa.setRequestHeader("Authorization", "Basic " + m_Token);	
+	xmlHttpa.setRequestHeader("Authorization", "Bearer " + m_Token);	
 	xmlHttpa.send();
 	  
 
