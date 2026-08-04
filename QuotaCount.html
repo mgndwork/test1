@@ -136,6 +136,7 @@ th {
 
 
 <div id='area2' style='position:relative;top:10px'></div>
+<div id='area2a' style='position:relative;top:10px;color:red; font-weight:bold; text-align:center;'></div>
 <div id='area3' style='position:relative;top:10px' class='table-container'></div>
 <div id='area4' style='position:relative;top:10px' class='table-container'></div>
 
@@ -199,7 +200,8 @@ function myFunction1(){
 				 vobj.no = i;
 				 vobj.SName = LK_filter[x].SurveyName;
 				 vobj.SID = LK_filter[x].SurveyId;
-				 vobj.SurveyState = LK_filter[x].SurveyState
+				 vobj.SurveyState = LK_filter[x].SurveyState;
+				 vobj.interviewerInstruction = LK_filter[x].InterviewerInstruction;
 				 LKarray[i] = vobj;
 				 i +=1;
 			   }
@@ -266,6 +268,7 @@ function copytable(){
 }
 
 function myFunctionQuota(){
+var sit;
 var sid;
 var area3HTML="";
 var area4HTML="";
@@ -280,7 +283,7 @@ var diffmapquotaCount;
 var tabList;
 var indexCheckArray;
 
-
+document.getElementById("area2a").innerHTML = "";
 document.getElementById("area3").innerHTML = "";
 document.getElementById("area4").innerHTML = "";
 
@@ -291,6 +294,11 @@ if(document.getElementById("surveylist").value == "none"){
 	
 			prjobj = LKarray.filter(prj => prj.no == document.getElementById("surveylist").value);
 			sid=prjobj[0].SID;
+			sit=prjobj[0].interviewerInstruction;	
+			
+			
+			//add survey Interviewer instruction text
+			document.getElementById("area2a").innerHTML = sit;
 			
 			//Get project Target
 			var xmlHttpm = new XMLHttpRequest();
