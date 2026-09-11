@@ -220,9 +220,7 @@ var sdes;
 
 
 const newsItems = [
-    "Maximum 8 live projects can only be assigned to the one tablet. Please clean your project from your tablet after completing your fieldwork. This task will save your tablet data bundle.",
-    "Sampling point project cleaning is not allowing to fieldwork team.",
-    "Please downgrade your nField version to 2.39.1. This version is very stable version for quota blocking. Latest fixed version will release by NIPO team soon. Please contact Pushpamal if you need any additional help.",
+    "Warning!!!!!!!------------------->NField API version V1 is fully retired since 1st of October 2026. As brownouts task, nField CAPI App will interrupt from 21st of September at 11.30AM to 22nd of September 11.30AM (24 Hours). Please arrange your tasks according to this information.",
     "Interviewer needs to syncronize their tablets daily."
 ];
 
@@ -510,21 +508,21 @@ if((document.getElementById("intv1").value == "none" && document.getElementById(
 				assignHTML+="<tr><td>"+ArrayIntvUsername[i]+"</td><td style='color:red;'>"+outlabel+"</td></tr>";
 			} else {
 					
-					var xmlHttp7 = new XMLHttpRequest();
-					xmlHttp7.open("POST","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/Interviewers", false); 
-					xmlHttp7.setRequestHeader("Content-Type","application/json");
-					xmlHttp7.setRequestHeader("Authorization","Bearer "+ m_Token);			
-					var obj7 = {"InterviewerId":ArrayIntvId[i]};
-					xmlHttp7.send(JSON.stringify(obj7));
+					//var xmlHttp7 = new XMLHttpRequest();
+					//xmlHttp7.open("POST","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/Interviewers", false); 
+					//xmlHttp7.setRequestHeader("Content-Type","application/json");
+					//xmlHttp7.setRequestHeader("Authorization","Bearer "+ m_Token);			
+					//var obj7 = {"InterviewerId":ArrayIntvId[i]};
+					//xmlHttp7.send(JSON.stringify(obj7));
 					
-					if (xmlHttp7.status==200) {
+					//if (xmlHttp7.status==200) {
 						var xmlHttp8 = new XMLHttpRequest();
-						xmlHttp8.open("POST","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/Distribute", false); 
+						xmlHttp8.open("POST","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/interviewers/distributeWorkpackageTarget", false); 
 						xmlHttp8.setRequestHeader("Content-Type","application/json");
 						xmlHttp8.setRequestHeader("Authorization","Bearer "+ m_Token);			
 						var obj8 = {"Description":"","SurveyGrossTargetToDistribute":prjtarget,"InterviewerIds":[ArrayIntvId[i]]};
 						xmlHttp8.send(JSON.stringify(obj8));
-					}
+					//}
 					
 					if (xmlHttp8.status==200) {
 						var Obj9 = JSON.parse(xmlHttp8.responseText);
