@@ -508,30 +508,37 @@ if((document.getElementById("intv1").value == "none" && document.getElementById(
 				assignHTML+="<tr><td>"+ArrayIntvUsername[i]+"</td><td style='color:red;'>"+outlabel+"</td></tr>";
 			} else {
 					
-					var xmlHttp7 = new XMLHttpRequest();
-					xmlHttp7.open("POST","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/Interviewers", false); 
-					xmlHttp7.setRequestHeader("Content-Type","application/json");
-					xmlHttp7.setRequestHeader("Authorization","Bearer "+ m_Token);			
-					var obj7 = {"InterviewerId":ArrayIntvId[i]};
-					xmlHttp7.send(JSON.stringify(obj7));
+					//var xmlHttp7 = new XMLHttpRequest();
+					//xmlHttp7.open("POST","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/Interviewers", false); 
+					//xmlHttp7.setRequestHeader("Content-Type","application/json");
+					//xmlHttp7.setRequestHeader("Authorization","Bearer "+ m_Token);			
+					//var obj7 = {"InterviewerId":ArrayIntvId[i]};
+					//xmlHttp7.send(JSON.stringify(obj7));
 					
-					if (xmlHttp7.status==200) {
+					//if (xmlHttp7.status==200) {
 						var xmlHttp8 = new XMLHttpRequest();
-						xmlHttp8.open("POST","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/distribute", false); 
+						xmlHttp8.open("PUT","https://apiap.nfieldmr.com/v2/Surveys/"+sid+"/interviewers/"+[ArrayIntvId[i]]+"/assign", false); 
 						xmlHttp8.setRequestHeader("Content-Type","application/json");
 						xmlHttp8.setRequestHeader("Authorization","Bearer "+ m_Token);			
-						var obj8 = {"Description":"","SurveyGrossTargetToDistribute":prjtarget,"InterviewerIds":[ArrayIntvId[i]]};
+						//var obj8 = {"Description":"","SurveyGrossTargetToDistribute":prjtarget,"InterviewerIds":[ArrayIntvId[i]]};
+						var obj8 = {"Description":"","assignmentType":"GroupAssignment"};
 						xmlHttp8.send(JSON.stringify(obj8));
-					}
+					//}
 					
 					if (xmlHttp8.status==200) {
 						var Obj9 = JSON.parse(xmlHttp8.responseText);
-						isassign=Obj9[0].DidAssign;
-					}
-					if(isassign==true){
+						//isassign=Obj9[0].DidAssign;
 						outlabel="Assigned";
 						assignHTML+="<tr><td>"+ArrayIntvUsername[i]+"</td><td style='color:green;'>"+outlabel+"</td></tr>";
-					} else {
+					}
+					//if(isassign==true){
+						//outlabel="Assigned";
+						//assignHTML+="<tr><td>"+ArrayIntvUsername[i]+"</td><td style='color:green;'>"+outlabel+"</td></tr>";
+					//} else {
+						//outlabel="Already assigned this project or Failed";
+						//assignHTML+="<tr><td>"+ArrayIntvUsername[i]+"</td><td style='color:red;'>"+outlabel+"</td></tr>";
+					//}
+					else {
 						outlabel="Already assigned this project or Failed";
 						assignHTML+="<tr><td>"+ArrayIntvUsername[i]+"</td><td style='color:red;'>"+outlabel+"</td></tr>";
 					}
